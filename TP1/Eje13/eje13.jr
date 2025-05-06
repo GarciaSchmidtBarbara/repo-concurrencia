@@ -1,0 +1,44 @@
+import edu.ucdavis.jr.JR;
+
+public class eje13{     //nombre de la clase igual que el archivo
+
+    //defino las variables globales a usar
+    private static float a = 5;
+    private static float b = 3;
+    private static float c = 10;
+    private static float d = 2;
+    private static float e = 4;
+    private static float f = 2;
+    private static float x;
+    private static float y;
+    private static float z;
+
+    //defino los procesos
+    private static process p1{
+        x = 3*a*b;
+        System.out.println(x);
+    }
+    private static process p2{
+        y = c-d;
+        System.out.println(y);
+    }
+    private static process p3{
+        z = e-f;
+        System.out.println(z);
+    }
+
+    //metodo principal
+    public static void main(String[] args) {
+        try {
+			JR.registerQuiescenceAction(done);      //cuando todos los procesos terminen se ejecuta metodo done
+		} catch (edu.ucdavis.jr.QuiescenceRegistrationException e) {
+			//TODO: handle exception
+		}
+    }
+
+    //metodo a ejecutra cuando terminen los procesos
+    private static op void done(){
+        float result = (x+4)/(int)Math.pow((y),(z));        //Variable local
+        System.out.println("Resultado: "+ result);
+    }
+}

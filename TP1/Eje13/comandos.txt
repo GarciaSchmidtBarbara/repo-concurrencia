@@ -1,0 +1,17 @@
+C:\Users\patur>cd C:\Users\patur\Desktop\UNTDF\Materias de Tercer Año\Introduccion a la concurrencia\jr_docker_ic\jr_docker_ic-main
+
+C:\Users\patur\Desktop\UNTDF\Materias de Tercer Año\Introduccion a la concurrencia\jr_docker_ic\jr_docker_ic-main>docker compose up -d
+time="2025-04-29T13:08:32-03:00" level=warning msg="C:\\Users\\patur\\Desktop\\UNTDF\\Materias de Tercer Año\\Introduccion a la concurrencia\\jr_docker_ic\\jr_docker_ic-main\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+[+] Running 1/1
+ ✔ Container jr_docker_ic  Running                                                                                 0.0s
+
+C:\Users\patur\Desktop\UNTDF\Materias de Tercer Año\Introduccion a la concurrencia\jr_docker_ic\jr_docker_ic-main>docker exec -it jr_docker_ic bash
+root@d03f1903b53e:/jr_code# cd Practica1\Eje13
+bash: cd: Practica1Eje13: No such file or directory
+root@d03f1903b53e:/jr_code# cd Practica1
+root@d03f1903b53e:/jr_code/Practica1# cd Eje13
+root@d03f1903b53e:/jr_code/Practica1/Eje13# jr eje13
+2.0
+8.0
+45.0
+Resultado: 0.765625
