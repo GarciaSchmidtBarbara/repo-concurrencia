@@ -1,0 +1,64 @@
+//a)	búffer simple, 1 productor y 1 consumidor.
+
+import edu.ucdavis.jr.JR;       //Importa la biblioteca JR 
+
+public class eje5a{
+
+    private static final int N = 20;
+    private static int[]buffer = new int[N]; 
+    private static sem puedoProducir = 20;      //semaforo
+    private static sem puedoConsumir =0;
+    
+    private static op void pausa(int tiempo){
+        
+        try{
+                Thread.sleep(tiempo);
+        }catch(java.lang.Exception e){}
+
+    }
+
+    //Proceso productor
+    private static process PProducer{
+        int valor=0;
+        int in=0;                    //in--> pos donde escribe el productor
+        while (true) { 
+            P(puedoProducir);       //wait
+            buffer[in] = valor;
+            in = (in + 1) % N;      //logra un vector circular
+            System.out.println("Producido: " + valor);
+            call pausa(1000);
+            valor++;
+            V(puedoConsumir);       //signal
+            
+        }   
+    }
+
+    // Proceso Consumidor
+    private static process PConsumer{
+        int out=0;                  //out-->pos donde lee el consumidor.
+        while(true) {
+            P(puedoConsumir);
+            int valor = buffer[out];
+            out = (out + 1) % N;
+            System.out.println("Consumido: " + valor);
+            call pausa(200);
+            V(puedoProducir);
+        }
+    }
+
+    //Metodo principal
+    public static void main(String[] args) {
+        try {
+            JR.registerQuiescenceAction(done);     
+        } catch (edu.ucdavis.jr.QuiescenceRegistrationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Accion a ejecutar cuando terminan todos los procesos
+    private static op void done() {
+        System.out.println("TODOS LOS DATOS PRODUCIDOS, LEIDOS POR EL CONSUMIDOR");
+    }
+}
+
+    

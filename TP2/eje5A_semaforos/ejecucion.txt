@@ -1,0 +1,20 @@
+a) búffer simple, 1 productor y 1 consumidor.
+
+root@0e624e50d982:/jr_code/repo-concurrencia/TP2/eje5A_semaforos# jr eje5a
+Producido: 0
+Producido: 1
+	Consumido: 0
+Producido: 2
+	Consumido: 1
+Producido: 3
+	Consumido: 2
+Producido: 4
+	Consumido: 3
+Producido: 5
+	Consumido: 4
+Producido: 6
+	Consumido: 5
+Producido: 7
+	Consumido: 6
+Producido: 8
+	Consumido: 7
