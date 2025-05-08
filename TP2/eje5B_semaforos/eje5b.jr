@@ -1,15 +1,16 @@
-//a)	buffer simple (1 elemento), 1 productor y 1 consumidor.
+//b buffer ilimitado (no tiene limites de tamanio), 1 productor y 1 consumidor.
+//productor unico: no se genera condicion de carrera, es el unico que agrega valores
+//consumidor unico: necesita sincronizacion con semafro para saber cuando consumir
 
-import edu.ucdavis.jr.JR;       //Importa la biblioteca JR 
+import edu.ucdavis.jr.JR;      
+import java.util.LinkedList;
 
-public class eje5a{
+public class eje5b{
 
-    private static int buffer; //buffer simple de 1 elemento
-    private static sem puedoProducir = 1;      //semaforo
-    private static sem puedoConsumir = 0;
+    static LinkedList<Integer> buffer = new LinkedList<Integer>();  //buffer infinito
+    private static sem puedoConsumir =0;
     
-    private static op void pausa(int tiempo){
-        
+    private static op void pausa(int tiempo){  
         try{
                 Thread.sleep(tiempo);
         }catch(java.lang.Exception e){}
@@ -20,12 +21,11 @@ public class eje5a{
     private static process PProducer{
         int valor=0;
         while (true) { 
-            P(puedoProducir);       //wait
-            buffer = valor;
+            buffer.add(valor);
             System.out.println("Producido: " + valor);
-            call pausa(1000);
+            call pausa(200);
             valor++;
-            V(puedoConsumir);       //signal
+            V(puedoConsumir);   //incremento semaforo del consumidor. 
             
         }   
     }
@@ -33,11 +33,10 @@ public class eje5a{
     // Proceso Consumidor
     private static process PConsumer{
         while(true) {
-            P(puedoConsumir);
-            int valor = buffer;
+            P(puedoConsumir);   //decremento semaforo
+            int valor = buffer.removeFirst();
             System.out.println("Consumido: " + valor);
-            call pausa(200);
-            V(puedoProducir);
+            call pausa(500);
         }
     }
 

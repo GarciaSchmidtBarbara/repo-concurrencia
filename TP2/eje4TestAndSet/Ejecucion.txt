@@ -1,0 +1,29 @@
+root@0e624e50d982:/jr_code/repo-concurrencia/TP2/eje4TestAndSet# jr eje4
+Proceso 24 ingresa a seccion critica
+Proceso 24  sale de la seccion critica
+Proceso 24 ingresa a seccion critica
+Proceso 24  sale de la seccion critica
+Proceso 24 ingresa a seccion critica
+Proceso 24  sale de la seccion critica
+Proceso 24 ingresa a seccion critica
+^Croot@0e624e50d982:/jr_code/repo-concurrencia/TP2/eje4TestAndSet# jr eje4
+Proceso 24 ingresa a seccion critica
+Proceso 24  sale de la seccion critica
+Proceso 23 ingresa a seccion critica
+Proceso 23  sale de la seccion critica
+Proceso 0 ingresa a seccion critica
+Proceso 0  sale de la seccion critica
+Proceso 5 ingresa a seccion critica
+Proceso 5  sale de la seccion critica
+Proceso 3 ingresa a seccion critica
+Proceso 3  sale de la seccion critica
+Proceso 21 ingresa a seccion critica
+Proceso 21  sale de la seccion critica
+Proceso 13 ingresa a seccion critica
+Proceso 13  sale de la seccion critica
+Proceso 2 ingresa a seccion critica
+Proceso 2  sale de la seccion critica
+Proceso 3 ingresa a seccion critica
+Proceso 3  sale de la seccion critica
+Proceso 23 ingresa a seccion critica
+Proceso 23  sale de la seccion critica

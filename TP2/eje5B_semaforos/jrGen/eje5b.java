@@ -8,35 +8,17 @@ import java.io.Serializable;
 
 
 import edu.ucdavis.jr.JR;
+import java.util.LinkedList;
 
-public class eje5a extends java.lang.Object {
+public class eje5b extends java.lang.Object {
     { JRinit(); }
     
-    public eje5a() {
+    public eje5b() {
         // Begin Expr2
         super();
         JRprocess();
     }
-    private static int buffer;
-    private static Op_ext.JRProxyOp JRget_op_puedoProducir_voidTovoid()
-    {
-        return op_puedoProducir_voidTovoid;
-    }
-    
-    public static Op_ext.JRProxyOp op_puedoProducir_voidTovoid;
-    ;
-    static    {
-        try    {
-            op_puedoProducir_voidTovoid = new Op_ext_.JRProxyOp(new InOp_ext_impl());
-            {
-                long JRTotal = 1;
-                if (JRTotal < 0) throw new jrRuntimeError("op initialized with a negative value");
-                for (long JRiter = 0; JRiter < JRTotal; JRiter++)
-                    op_puedoProducir_voidTovoid.send(jrvm.getTimestamp(), (java.lang.Object []) null);
-            }
-        } catch (Exception e) { throw new jrRuntimeError(e.toString());}
-    }
-    
+    static LinkedList buffer = new LinkedList();
     private static Op_ext.JRProxyOp JRget_op_puedoConsumir_voidTovoid()
     {
         return op_puedoConsumir_voidTovoid;
@@ -114,7 +96,7 @@ public class eje5a extends java.lang.Object {
     public static Op_ext.JRProxyOp op_pausa_intTovoid;
     static class ProcOp_intTovoid_implpausa extends ProcOp_ext_impl
     {
-        public ProcOp_intTovoid_implpausa(eje5a thisIn) throws RemoteException
+        public ProcOp_intTovoid_implpausa(eje5b thisIn) throws RemoteException
         {
         }
         public java.lang.Object call(long JRtimestamp, java.lang.Object [] JRargs) throws RemoteException
@@ -122,7 +104,7 @@ public class eje5a extends java.lang.Object {
             jrvm.ariseAndReceive();  // from caller
             try    {
                 jrvm.setTimestamp(JRtimestamp);
-                eje5a.pausaintTovoid(null, null, null, JRargs);
+                eje5b.pausaintTovoid(null, null, null, JRargs);
 return null;
             } finally {
                 jrvm.sendAndDie();    // to caller
@@ -151,7 +133,7 @@ return null;
             public void run()
             {
                 try    {
-                    eje5a.pausaintTovoid(this.retOp, this.fretOp, this.handler, this.JRargs);
+                    eje5b.pausaintTovoid(this.retOp, this.fretOp, this.handler, this.JRargs);
                 } catch (Exception e) {/* should be safe to ignore this exception */}
                 jrvm.threadDeath();
             }
@@ -255,7 +237,7 @@ return null;
     public static Op_ext.JRProxyOp op_PProducer_voidTovoid;
     static class ProcOp_voidTovoid_implPProducer extends ProcOp_ext_impl
     {
-        public ProcOp_voidTovoid_implPProducer(eje5a thisIn) throws RemoteException
+        public ProcOp_voidTovoid_implPProducer(eje5b thisIn) throws RemoteException
         {
         }
         public java.lang.Object call(long JRtimestamp, java.lang.Object [] JRargs) throws RemoteException
@@ -263,7 +245,7 @@ return null;
             jrvm.ariseAndReceive();  // from caller
             try    {
                 jrvm.setTimestamp(JRtimestamp);
-                eje5a.PProducervoidTovoid(null, null, null, JRargs);
+                eje5b.PProducervoidTovoid(null, null, null, JRargs);
 return null;
             } finally {
                 jrvm.sendAndDie();    // to caller
@@ -292,7 +274,7 @@ return null;
             public void run()
             {
                 try    {
-                    eje5a.PProducervoidTovoid(this.retOp, this.fretOp, this.handler, this.JRargs);
+                    eje5b.PProducervoidTovoid(this.retOp, this.fretOp, this.handler, this.JRargs);
                 } catch (Exception e) {/* should be safe to ignore this exception */}
                 jrvm.threadDeath();
             }
@@ -397,20 +379,13 @@ return null;
             {
                 int valor = 0;
                 JRLoop0: while (true) {
-                    {
-                        jrvm.sendAndDie();
-                        Recv_ext recv_voidTovoid = JRget_op_puedoProducir_voidTovoid().recv();
-                        jrvm.ariseAndReceive();
-                        if (recv_voidTovoid.retOp != null)
-                            recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
-                    }
                     // Begin Expr2
-                    buffer = valor;
+                    buffer.add(valor);
                     // Begin Expr2
                     System.out.println("Producido: " + valor);
                     // Begin JRCall
                     // Begin Expr2
-                    (new Cap_ext_(JRget_op_pausa_intTovoid(), "void")).call(jrvm.getTimestamp(), new java.lang.Object [] {1000});// End JRCall
+                    (new Cap_ext_(JRget_op_pausa_intTovoid(), "void")).call(jrvm.getTimestamp(), new java.lang.Object [] {200});// End JRCall
                     
                     // Begin Expr2
                     valor++;
@@ -459,7 +434,7 @@ return null;
     public static Op_ext.JRProxyOp op_PConsumer_voidTovoid;
     static class ProcOp_voidTovoid_implPConsumer extends ProcOp_ext_impl
     {
-        public ProcOp_voidTovoid_implPConsumer(eje5a thisIn) throws RemoteException
+        public ProcOp_voidTovoid_implPConsumer(eje5b thisIn) throws RemoteException
         {
         }
         public java.lang.Object call(long JRtimestamp, java.lang.Object [] JRargs) throws RemoteException
@@ -467,7 +442,7 @@ return null;
             jrvm.ariseAndReceive();  // from caller
             try    {
                 jrvm.setTimestamp(JRtimestamp);
-                eje5a.PConsumervoidTovoid(null, null, null, JRargs);
+                eje5b.PConsumervoidTovoid(null, null, null, JRargs);
 return null;
             } finally {
                 jrvm.sendAndDie();    // to caller
@@ -496,7 +471,7 @@ return null;
             public void run()
             {
                 try    {
-                    eje5a.PConsumervoidTovoid(this.retOp, this.fretOp, this.handler, this.JRargs);
+                    eje5b.PConsumervoidTovoid(this.retOp, this.fretOp, this.handler, this.JRargs);
                 } catch (Exception e) {/* should be safe to ignore this exception */}
                 jrvm.threadDeath();
             }
@@ -607,14 +582,13 @@ return null;
                         if (recv_voidTovoid.retOp != null)
                             recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
                     }
-                    int valor = buffer;
+                    int valor = ((Integer)buffer.removeFirst());
                     // Begin Expr2
                     System.out.println("Consumido: " + valor);
                     // Begin JRCall
                     // Begin Expr2
-                    (new Cap_ext_(JRget_op_pausa_intTovoid(), "void")).call(jrvm.getTimestamp(), new java.lang.Object [] {200});// End JRCall
+                    (new Cap_ext_(JRget_op_pausa_intTovoid(), "void")).call(jrvm.getTimestamp(), new java.lang.Object [] {500});// End JRCall
                     
-                    JRget_op_puedoProducir_voidTovoid().send(jrvm.getTimestamp(), (edu.ucdavis.jr.RemoteHandler)null, (java.lang.Object [])null);
                 }
             }
         } catch (Exception JRe)    {
@@ -714,7 +688,7 @@ return null;
     public static Op_ext.JRProxyOp op_done_voidTovoid;
     static class ProcOp_voidTovoid_impldone extends ProcOp_ext_impl
     {
-        public ProcOp_voidTovoid_impldone(eje5a thisIn) throws RemoteException
+        public ProcOp_voidTovoid_impldone(eje5b thisIn) throws RemoteException
         {
         }
         public java.lang.Object call(long JRtimestamp, java.lang.Object [] JRargs) throws RemoteException
@@ -722,7 +696,7 @@ return null;
             jrvm.ariseAndReceive();  // from caller
             try    {
                 jrvm.setTimestamp(JRtimestamp);
-                eje5a.donevoidTovoid(null, null, null, JRargs);
+                eje5b.donevoidTovoid(null, null, null, JRargs);
 return null;
             } finally {
                 jrvm.sendAndDie();    // to caller
@@ -751,7 +725,7 @@ return null;
             public void run()
             {
                 try    {
-                    eje5a.donevoidTovoid(this.retOp, this.fretOp, this.handler, this.JRargs);
+                    eje5b.donevoidTovoid(this.retOp, this.fretOp, this.handler, this.JRargs);
                 } catch (Exception e) {/* should be safe to ignore this exception */}
                 jrvm.threadDeath();
             }
@@ -848,12 +822,12 @@ return null;
     }
     
     protected boolean JRcalled = false;
-    protected JReje5a jrresref;
+    protected JReje5b jrresref;
     public Object JRgetjrresref()
     { try {return jrresref.clone(); } catch (Exception e) {/* not gonna happen */ return null; } }
     protected void JRinit() {
     	if(this.JRcalled) return;
-    	jrresref = new JReje5a(op_done_voidTovoid, op_PConsumer_voidTovoid, op_PProducer_voidTovoid, op_pausa_intTovoid, op_puedoConsumir_voidTovoid, op_puedoProducir_voidTovoid);
+    	jrresref = new JReje5b(op_done_voidTovoid, op_PConsumer_voidTovoid, op_PProducer_voidTovoid, op_pausa_intTovoid, op_puedoConsumir_voidTovoid);
     	this.JRcalled = true;
     }
     private boolean JRproc = false;

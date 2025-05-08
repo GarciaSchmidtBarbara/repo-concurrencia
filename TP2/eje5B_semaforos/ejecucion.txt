@@ -1,0 +1,40 @@
+root@0e624e50d982:/jr_code/repo-concurrencia/TP2/eje5B_semaforos# jr eje5b
+Note: jrGen/eje5b.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+Producido: 0
+Producido: 1
+	Consumido: 0
+Producido: 2
+Producido: 3
+	Consumido: 1
+Producido: 4
+Producido: 5
+	Consumido: 2
+Producido: 6
+Producido: 7
+Producido: 8
+	Consumido: 3
+Producido: 9
+Producido: 10
+	Consumido: 4
+Producido: 11
+Producido: 12
+Producido: 13
+	Consumido: 5
+Producido: 14
+Producido: 15
+	Consumido: 6
+Producido: 16
+Producido: 17
+Producido: 18
+	Consumido: 7
+Producido: 19
+Producido: 20
+	Consumido: 8
+Producido: 21
+Producido: 22
+
+En este problema, el productor no necesita semaforo ya que es el unico que ingresa
+valores al buffer (el cual es ilimitado)
+por otro lado el consumidor debe esperar a que le envien la señal V() para saber
+que hay algo para consumir.

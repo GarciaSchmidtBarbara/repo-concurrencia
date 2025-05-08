@@ -1,0 +1,21 @@
+root@0e624e50d982:/jr_code/repo-concurrencia/TP2/eje5A_semaforos# jr eje5a
+Producido: 0
+	Consumido: 0
+Producido: 1
+	Consumido: 1
+Producido: 2
+	Consumido: 2
+Producido: 3
+	Consumido: 3
+Producido: 4
+	Consumido: 4
+Producido: 5
+	Consumido: 5
+Producido: 6
+	Consumido: 6
+Producido: 7
+	Consumido: 7
+Producido: 8
+
+como el buffer almacena solo un valor si o si
+lo que se produce debe consumierse

@@ -1,0 +1,71 @@
+//c-	buffer ilimitado, n productores y m consumidores.
+//productores: no se genera condicion de carrera, es el unico que agrega valores
+//consumidores: necesita sincronizacion con semafro para saber cuando consumir
+
+import edu.ucdavis.jr.JR;      
+import java.util.LinkedList;
+
+public class eje5c{
+
+    static LinkedList<Integer> buffer = new LinkedList<Integer>();  //buffer infinito
+    static int valor = 0;
+    private static sem puedoConsumir =0;
+    private static sem mutexC =1;   //semaforo que restinge el acceso al buffer a 1 proceso a la vez
+    private static sem mutexP =1;   
+    
+    private static op void pausa(int tiempo){  
+        try{
+                Thread.sleep(tiempo);
+        }catch(java.lang.Exception e){}
+
+    }
+
+    //Proceso productor
+    private static process PProducer{
+        while (true) { 
+            P(mutexP);
+            buffer.add(valor);
+            System.out.println("Producido: " + valor);
+            valor++;
+            V(mutexP);
+            call pausa(200);
+            V(puedoConsumir);   //incremento semaforo del consumidor. 
+            
+        }   
+    }
+
+    // Proceso Consumidor
+    private static process PConsumer{
+        while(true) {
+            P(puedoConsumir);   //decremento semaforo
+            P(mutexC);      //restrinjo el buffer a 1 proceso
+            int aux = buffer.removeFirst();
+            System.out.println("Consumido: " + aux);
+            V(mutexC);
+            call pausa(500);
+        }
+    }
+
+    //Metodo principal
+    public static void main(String[] args) {
+        int nProductores = 5;
+        int mConsumidores = 5;
+
+        for (int i = 0; i < nProductores; i++) {
+            new PProducer();
+        }
+
+        try {
+            JR.registerQuiescenceAction(done);     
+        } catch (edu.ucdavis.jr.QuiescenceRegistrationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Accion a ejecutar cuando terminan todos los procesos
+    private static op void done() {
+        System.out.println("TODOS LOS DATOS PRODUCIDOS, LEIDOS POR EL CONSUMIDOR");
+    }
+}
+
+    
