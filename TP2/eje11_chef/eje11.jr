@@ -1,0 +1,28 @@
+import edu.ucdavis.jr.JR;     
+
+public class eje11{
+
+    private static sem[]semaforos = new sem[3]; //arreglo de 3 semaforos
+    private static cantPizzas=0;
+
+    private process chef{
+        while(true){
+            int ingrediente_faltante= (int)Math.random(3):
+            int hay_pizza = 1;
+            P(semaforo[ingrediente_faltante]);
+            System.out.println('Un pizza lista para terminar')
+        }
+        
+
+    }
+    private process ayud1{
+        
+    }
+    private process ayud2{
+        
+    }
+    private process ayud3{
+        
+    }
+
+}
