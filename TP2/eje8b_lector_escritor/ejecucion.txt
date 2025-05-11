@@ -1,0 +1,53 @@
+Proceso 4 leyendo 10
+    Hay 1 escritores en espera
+    Hay 1 lectores activos
+    Hay 2 escritores en espera
+    Hay 3 escritores en espera
+    Hay 4 escritores en espera
+Proceso 0 escribe 6
+    Hay 5 escritores en espera
+    Hay 6 escritores en espera
+    Hay 7 escritores en espera
+    Hay 8 escritores en espera
+    Hay 9 escritores en espera
+    Hay 10 escritores en espera
+Proceso 1 escribe 7
+Proceso 2 escribe 9
+Proceso 3 escribe 9
+Proceso 4 escribe 7
+Proceso 5 escribe 4
+Proceso 6 escribe 2
+Proceso 7 escribe 0
+Proceso 8 escribe 8
+Proceso 9 escribe 3
+Proceso 0 leyendo 3
+    Hay 1 lectores activos
+Proceso 1 leyendo 3
+    Hay 2 lectores activos
+Proceso 2 leyendo 3
+    Hay 3 lectores activos
+Proceso 3 leyendo 3
+    Hay 4 lectores activos
+Proceso 1 leyendo 3
+    Hay 1 lectores activos
+Proceso 4 leyendo 3
+    Hay 1 lectores activos
+Proceso 0 leyendo 3
+    Hay 1 lectores activos
+Proceso 3 leyendo 3
+    Hay 1 lectores activos
+    Hay 1 escritores en espera
+Proceso 4 escribe 6
+    Hay 1 escritores en espera
+Proceso 1 escribe 1
+Proceso 0 leyendo 1
+    Hay 1 lectores activos
+Proceso 3 leyendo 1
+    Hay 1 lectores activos
+Proceso 2 leyendo 1
+    Hay 1 lectores activos
+    Hay 1 escritores en espera
+Proceso 2 escribe 3
+    Hay 1 escritores en espera
+Proceso 0 escribe 7
+    Hay 1 escritores en espera

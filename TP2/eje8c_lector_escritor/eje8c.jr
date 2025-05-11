@@ -1,26 +1,23 @@
-//8.b lectores y escritores sobre un archivo. PRIORIDAD ESCRITORES
+//8.c. una solucion justa
 //lectores: todos pueden acceder a la vez.
 //escritores: solo 1 puede acceder a la vez. 
-//Los lectores ahora solo bloquean el acceso si hay escritores esperando.
-//Los escritores desbloquean a los lectores cuando terminan para evitar que queden en espera indefinidamente.
+//Se genera una cola, el primero que llega accede.
 
 
 
 import edu.ucdavis.jr.JR;
 
-public class eje8b{
+public class eje8c{
    
     static int L = 5; 
-    static int E = 10;
+    static int E = 5;
     static int numero = 10;
+
     static sem puedoLeer = L;    //semaforo contador
     static int cantL = 0; //contador de lectores activos
     static sem mutexL = 1; //proteger la var cantL
 
     static sem puedoEscribir =1;    //semaforo binario
-    static int cantE = 0;       //cantidad de escritores en espera (prioridad)
-    static sem mutexE = 1;
-
     
     private static op void pausa(int tiempo){  
         try{
@@ -30,26 +27,19 @@ public class eje8b{
 
     private static process Escritores((int i=0; i<E; i++)){
         while (true) { 
-            P(mutexE);
-            cantE++;    //agrego un escritor en la espera
-            System.out.println("    Hay "+cantE+" escritores en espera");
-            if (cantE == 1) {
-                P(puedoLeer); // El primer escritor en espera bloquea a los lectores
+            P(mutexL);
+            if (cantL == 0) {
+                P(puedoLeer); // El primer escritor bloquea a los lectores
             }
-            V(mutexE);
+            V(mutexL);
 
             P(puedoEscribir);   // Espera que no haya otros escritores ni lectores
 
             numero = (int)(Math.random() * 10);
             System.out.println("Proceso "+i+" escribe " + numero);
 
-            P(mutexE);
-            cantE--;    //escritor sale
-            if (cantE == 0){
-                V(puedoLeer); //Libera a los lectores si no hay mas escritores esperando
-            }
-            V(mutexE);
-
+            V(puedoLeer); //Libera el acceso a los lectores 
+       
             V(puedoEscribir); // Libera el acceso a otros escritores
 
             int tiempo=(int)(Math.random() * 500)+100; 
@@ -59,27 +49,20 @@ public class eje8b{
 
     private static process Lectores((int i=0; i<L; i++)){
         while(true) {
-            P(mutexE);
-            if (cantE > 0){  //Si hay escritores esperando, se bloquean los lectores
-                V(mutexE);
-                P(puedoLeer); 
-            }else
-                V(mutexE);
-            
             P(mutexL); 
             cantL++;
             if(cantL ==1){
                 P(puedoEscribir);   //el primero bloquea a los escritores
             }
-            
-            System.out.println("Proceso "+i+" leyendo " + numero);
             System.out.println("    Hay "+cantL+" lectores activos");
+            System.out.println("Proceso "+i+" leyendo " + numero);
             V(mutexL);
 
             P(mutexL);
             cantL--;
             if (cantL == 0) {   //ultimo lector libera a los escritores
                 V(puedoEscribir);
+                System.out.println("    Hay "+cantL+" lectores activos");
             }
             V(mutexL);
 

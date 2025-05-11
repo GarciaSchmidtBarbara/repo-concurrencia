@@ -1,0 +1,47 @@
+Hay 1 lectores activos
+Proceso 4 leyendo 10
+    Hay 2 lectores activos
+Proceso 1 leyendo 10
+    Hay 3 lectores activos
+Proceso 0 leyendo 10
+    Hay 4 lectores activos
+Proceso 2 leyendo 10
+    Hay 5 lectores activos
+Proceso 3 leyendo 10
+    Hay 0 lectores activos
+Proceso 0 escribe 0
+Proceso 1 escribe 9
+Proceso 2 escribe 0
+Proceso 4 escribe 8
+Proceso 3 escribe 9
+Proceso 1 escribe 9
+Proceso 2 escribe 9
+Proceso 4 escribe 6
+    Hay 1 lectores activos
+Proceso 1 leyendo 6
+    Hay 0 lectores activos
+    Hay 1 lectores activos
+Proceso 4 leyendo 6
+    Hay 0 lectores activos
+    Hay 1 lectores activos
+Proceso 2 leyendo 6
+    Hay 0 lectores activos
+    Hay 1 lectores activos
+Proceso 3 leyendo 6
+    Hay 0 lectores activos
+    Hay 1 lectores activos
+Proceso 0 leyendo 6
+    Hay 0 lectores activos
+Proceso 2 escribe 7
+Proceso 1 escribe 5
+    Hay 1 lectores activos
+Proceso 2 leyendo 5
+    Hay 0 lectores activos
+Proceso 0 escribe 6
+    Hay 1 lectores activos
+Proceso 1 leyendo 6
+    Hay 0 lectores activos
+    Hay 1 lectores activos
+Proceso 4 leyendo 6
+    Hay 0 lectores activos
+Proceso 3 escribe 1

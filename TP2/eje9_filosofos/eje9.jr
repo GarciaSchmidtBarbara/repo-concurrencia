@@ -1,0 +1,70 @@
+
+import edu.ucdavis.jr.JR;
+
+public class eje9{
+   
+    private static cap void () en_espera[] = new cap void()[5];
+    static{
+        for (int i=0; i<5; i++){    //inicio los 5 semaforos en 1
+            fork[i] = new sem(1);
+        }
+    }
+
+    private static int veces = 20; //los filosofos podran comer solo 10 veces entre todos, asi evaluo mejor
+    private static sem mutexV = 1;
+    
+    
+    private static op void pensar(int tiempo, int i){  
+        try{
+            System.out.println("Folosofo "+i+" pensando");
+            Thread.sleep(tiempo);
+        }catch(java.lang.Exception e){}
+    }
+    private static op void comer(int tiempo, int i){  
+        try{
+            System.out.println("Folosofo "+i+" comiendo");
+            Thread.sleep(tiempo);
+        }catch(java.lang.Exception e){}
+    }
+
+    private static process Filosofo((int i=0; i<5; i++)){
+        while (true) {
+            P(mutexV);
+            if (veces <=0){
+                V(mutexV);
+                break; //terminar proceso
+            } 
+            veces--;
+            V(mutexV);
+            P(fork[i]);     //toma tenedor izq
+            int derecha = (i+1) % 5;
+            P(fork[derecha]); //toma tenedor derecho
+
+            int tiempo=(int)(Math.random() * 500)+100;
+            call comer(tiempo, i+1);
+
+            V(fork[i]);     //libera tenedor izq
+            V(fork[derecha]); //libera tenedor derecho
+
+            tiempo=(int)(Math.random() * 500)+100;
+            call pensar(tiempo, i+1);
+        }   
+    }
+
+
+    //Metodo principal
+    public static void main(String[] args) {
+        try {
+            JR.registerQuiescenceAction(done);     
+        } catch (edu.ucdavis.jr.QuiescenceRegistrationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Accion a ejecutar cuando terminan todos los procesos
+    private static op void done() {
+        System.out.println("FIN");
+    }
+}
+
+    

@@ -6,7 +6,7 @@ import edu.ucdavis.jr.jrx.*;
 import java.rmi.*;
 import java.io.Serializable;
 
-    public class JReje8b
+    public class JReje8c
       extends JRjavadotlangdotObject
       implements Serializable, Cloneable
     {
@@ -43,14 +43,6 @@ import java.io.Serializable;
 		this.op_pausa_intTovoid = op_pausa_intTovoid;
 	}
 
-	public Cap_ext_ op_mutexE_voidTovoid;
-	public Cap_ext_ JRget_op_mutexE_voidTovoid() {
-		return op_mutexE_voidTovoid;
-	}
-	public void JRset_op_mutexE_voidTovoid(Cap_ext_ op_mutexE_voidTovoid) {
-		this.op_mutexE_voidTovoid = op_mutexE_voidTovoid;
-	}
-
 	public Cap_ext_ op_puedoEscribir_voidTovoid;
 	public Cap_ext_ JRget_op_puedoEscribir_voidTovoid() {
 		return op_puedoEscribir_voidTovoid;
@@ -67,14 +59,6 @@ import java.io.Serializable;
 		this.op_mutexL_voidTovoid = op_mutexL_voidTovoid;
 	}
 
-	public Cap_ext_ op_permitirLectura_voidTovoid;
-	public Cap_ext_ JRget_op_permitirLectura_voidTovoid() {
-		return op_permitirLectura_voidTovoid;
-	}
-	public void JRset_op_permitirLectura_voidTovoid(Cap_ext_ op_permitirLectura_voidTovoid) {
-		this.op_permitirLectura_voidTovoid = op_permitirLectura_voidTovoid;
-	}
-
 	public Cap_ext_ op_puedoLeer_voidTovoid;
 	public Cap_ext_ JRget_op_puedoLeer_voidTovoid() {
 		return op_puedoLeer_voidTovoid;
@@ -83,42 +67,36 @@ import java.io.Serializable;
 		this.op_puedoLeer_voidTovoid = op_puedoLeer_voidTovoid;
 	}
 
-	public JReje8b(JReje8b copy)
+	public JReje8c(JReje8c copy)
 	{
 	this.op_done_voidTovoid = copy.op_done_voidTovoid;
 	this.op_Lectores_intTovoid = copy.op_Lectores_intTovoid;
 	this.op_Escritores_intTovoid = copy.op_Escritores_intTovoid;
 	this.op_pausa_intTovoid = copy.op_pausa_intTovoid;
-	this.op_mutexE_voidTovoid = copy.op_mutexE_voidTovoid;
 	this.op_puedoEscribir_voidTovoid = copy.op_puedoEscribir_voidTovoid;
 	this.op_mutexL_voidTovoid = copy.op_mutexL_voidTovoid;
-	this.op_permitirLectura_voidTovoid = copy.op_permitirLectura_voidTovoid;
 	this.op_puedoLeer_voidTovoid = copy.op_puedoLeer_voidTovoid;
 
 	}
-	public JReje8b(Object ... opSig)
+	public JReje8c(Object ... opSig)
 	{
 	this.op_done_voidTovoid = new Cap_ext_((Op_ext_.JRProxyOp)opSig[0]);
 	this.op_Lectores_intTovoid = new Cap_ext_((Op_ext_.JRProxyOp)opSig[1]);
 	this.op_Escritores_intTovoid = new Cap_ext_((Op_ext_.JRProxyOp)opSig[2]);
 	this.op_pausa_intTovoid = new Cap_ext_((Op_ext_.JRProxyOp)opSig[3]);
-	this.op_mutexE_voidTovoid = new Cap_ext_((Op_ext_.JRProxyOp)opSig[4]);
-	this.op_puedoEscribir_voidTovoid = new Cap_ext_((Op_ext_.JRProxyOp)opSig[5]);
-	this.op_mutexL_voidTovoid = new Cap_ext_((Op_ext_.JRProxyOp)opSig[6]);
-	this.op_permitirLectura_voidTovoid = new Cap_ext_((Op_ext_.JRProxyOp)opSig[7]);
-	this.op_puedoLeer_voidTovoid = new Cap_ext_((Op_ext_.JRProxyOp)opSig[8]);
+	this.op_puedoEscribir_voidTovoid = new Cap_ext_((Op_ext_.JRProxyOp)opSig[4]);
+	this.op_mutexL_voidTovoid = new Cap_ext_((Op_ext_.JRProxyOp)opSig[5]);
+	this.op_puedoLeer_voidTovoid = new Cap_ext_((Op_ext_.JRProxyOp)opSig[6]);
 
 	}
-	public JReje8b(boolean dummy)	{
+	public JReje8c(boolean dummy)	{
 	    super(dummy);
 	this.op_done_voidTovoid = Cap_ext_.noop;
 	this.op_Lectores_intTovoid = Cap_ext_.noop;
 	this.op_Escritores_intTovoid = Cap_ext_.noop;
 	this.op_pausa_intTovoid = Cap_ext_.noop;
-	this.op_mutexE_voidTovoid = Cap_ext_.noop;
 	this.op_puedoEscribir_voidTovoid = Cap_ext_.noop;
 	this.op_mutexL_voidTovoid = Cap_ext_.noop;
-	this.op_permitirLectura_voidTovoid = Cap_ext_.noop;
 	this.op_puedoLeer_voidTovoid = Cap_ext_.noop;
 
 	}
@@ -129,6 +107,6 @@ import java.io.Serializable;
 	}
 	public static Object getNoop()
 	{
-	    return new JReje8b(true);
+	    return new JReje8c(true);
 	}
     }
