@@ -1,0 +1,74 @@
+//7
+
+import edu.ucdavis.jr.JR;
+
+public class eje7{
+    
+    //semaforos binarios 
+    static sem puedeT2 = 0;
+    static sem puedeT3 = 0;
+    static sem puedeT4 = 0;
+    static sem puedeT5 = 0;
+ 
+    private static op void pausa(int tiempo){  
+        try{
+                Thread.sleep(tiempo);
+        }catch(java.lang.Exception e){}
+
+    }
+
+    private static process T1{
+        System.out.println("Proceso 1 inicia");
+        int tiempo=(int)(Math.random() * 500)+100; //creo pausas aleatorias para simular que hace algo
+        call pausa(tiempo);
+        System.out.println("Proceso 1 termina");
+        V(puedeT2); V(puedeT3);     //habilito los procesos siguientes
+    }
+    private static process T2{
+        P(puedeT2);     //espero el aviso de poder seguir
+        System.out.println("Proceso 2 inicia");
+        int tiempo=(int)(Math.random() * 500)+100; 
+        call pausa(tiempo);
+        System.out.println("Proceso 2 termina");
+        V(puedeT4);
+    }
+    private static process T3{
+        P(puedeT3);    
+        System.out.println("Proceso 3 inicia");
+        int tiempo=(int)(Math.random() * 500)+100; 
+        call pausa(tiempo);
+        System.out.println("Proceso 3 termina");
+        V(puedeT5);
+    }
+    private static process T4{
+        P(puedeT4);     
+        System.out.println("Proceso 4 inicia");
+        int tiempo=(int)(Math.random() * 500)+100; 
+        call pausa(tiempo);
+        System.out.println("Proceso 4 termina");
+        V(puedeT5);
+    }
+    private static process T5{
+        P(puedeT5);    P(puedeT5);  //necesito recibir dos avisos 
+        System.out.println("Proceso 5 inicia");
+        int tiempo=(int)(Math.random() * 500)+100; 
+        call pausa(tiempo);
+        System.out.println("Proceso 5 termina");
+    }
+
+    //Metodo principal
+    public static void main(String[] args) {
+        try {
+            JR.registerQuiescenceAction(done);     
+        } catch (edu.ucdavis.jr.QuiescenceRegistrationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Accion a ejecutar cuando terminan todos los procesos
+    private static op void done() {
+        System.out.println("FIN");
+    }
+}
+
+    

@@ -4,9 +4,9 @@ import edu.ucdavis.jr.JR;       //Importa la biblioteca JR
 
 public class eje5a{
 
-    private static int buffer; //buffer simple de 1 elemento
-    private static sem puedoProducir = 1;      //semaforo
-    private static sem puedoConsumir = 0;
+    private static int buffer;  //buffer simple de 1 elemento
+    private static sem puedoProducir = 1;      //debo permitir que primero se produzca, por eso el 1
+    private static sem puedoConsumir = 0;       // debo evitar que un consumidor quiera ingresar la primera vez, por eso 0
     
     private static op void pausa(int tiempo){
         
@@ -20,12 +20,12 @@ public class eje5a{
     private static process PProducer{
         int valor=0;
         while (true) { 
-            P(puedoProducir);       //wait
+            P(puedoProducir);       //wait al productor
             buffer = valor;
             System.out.println("Producido: " + valor);
             call pausa(1000);
             valor++;
-            V(puedoConsumir);       //signal
+            V(puedoConsumir);       //signal al consumidor
             
         }   
     }
@@ -33,11 +33,11 @@ public class eje5a{
     // Proceso Consumidor
     private static process PConsumer{
         while(true) {
-            P(puedoConsumir);
+            P(puedoConsumir);   //wait al consumidor
             int valor = buffer;
             System.out.println("Consumido: " + valor);
             call pausa(200);
-            V(puedoProducir);
+            V(puedoProducir);   //signal al productor
         }
     }
 

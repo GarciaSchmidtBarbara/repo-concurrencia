@@ -1,0 +1,32 @@
+root@0e624e50d982:/jr_code/repo-concurrencia/TP2/eje5D_semaforos# jr eje5d
+Pos: 0 se produce: 0
+	Pos: 0 se consume: 0
+Pos: 1 se produce: 1
+	Pos: 1 se consume: 1
+Pos: 2 se produce: 2
+	Pos: 2 se consume: 2
+Pos: 3 se produce: 3
+	Pos: 3 se consume: 3
+Pos: 4 se produce: 4
+	Pos: 4 se consume: 4
+BUFFER PRODUCIDO COMPLETAMENTE
+BUFFER CONSUMIDO COMPLETAMENTE
+FIN
+
+LO HAGO CON UN BUFFER LIMITADO NO CIRCULAR POR QUE EL EJEMPLO DE CIRCULAR
+ES DEL EJE 18 DEL TP1
+
+root@0e624e50d982:/jr_code/repo-concurrencia/TP2/eje5D_semaforos# jr eje5d
+Pos: 0 se produce: 0
+	Pos: 0 se consume: 0
+Pos: 1 se produce: 1
+Pos: 2 se produce: 2
+	Pos: 1 se consume: 1
+Pos: 3 se produce: 3
+Pos: 4 se produce: 4
+	Pos: 2 se consume: 2
+BUFFER PRODUCIDO COMPLETAMENTE
+	Pos: 3 se consume: 3
+	Pos: 4 se consume: 4
+BUFFER CONSUMIDO COMPLETAMENTE
+FIN

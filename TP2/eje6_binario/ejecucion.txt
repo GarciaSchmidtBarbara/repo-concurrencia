@@ -1,0 +1,32 @@
+Creo un semaforo binario y N procesos. 
+Cada proceso suma 1 a la variable compartida x
+Cada proceso tiene un tiempo de espera aleatorio para lograr que se intercalen
+
+VALOR INICIAL DE X = 0
+Proceso: 9 --> x = 1
+Proceso: 2 --> x = 2
+Proceso: 0 --> x = 3
+Proceso: 3 --> x = 4
+Proceso: 1 --> x = 5
+Proceso: 5 --> x = 6
+Proceso: 4 --> x = 7
+Proceso: 6 --> x = 8
+Proceso: 7 --> x = 9
+Proceso: 8 --> x = 10
+Proceso: 9 --> x = 11
+Proceso: 5 --> x = 12
+Proceso: 0 --> x = 13
+Proceso: 0 --> x = 14
+Proceso: 1 --> x = 15
+Proceso: 3 --> x = 16
+Proceso: 7 --> x = 17
+Proceso: 2 --> x = 18
+Proceso: 6 --> x = 19
+Proceso: 8 --> x = 20
+Proceso: 4 --> x = 21
+Proceso: 1 --> x = 22
+Proceso: 9 --> x = 23
+Proceso: 5 --> x = 24
+Proceso: 1 --> x = 25
+Proceso: 0 --> x = 26
+Proceso: 5 --> x = 27

@@ -1,0 +1,66 @@
+//d- buffer acotado (circular), 1 productor y 1 consumidor.
+//productor: no necesita semaforo ya que puede acceder siempre al buffer
+//consumidor: necesita semanaforo para cceder cuando haya un dato a consumir
+
+import edu.ucdavis.jr.JR;
+
+public class eje5d{
+
+
+    static int N = 5;   //cant espacios del buffer
+    static int[]buffer = new int[N];  //buffer acotado (EJEMPLO CON NO CIRCULAR.)
+    static sem puedoConsumir =0; 
+
+    
+    
+    private static op void pausa(int tiempo){  
+        try{
+                Thread.sleep(tiempo);
+        }catch(java.lang.Exception e){}
+
+    }
+
+    //Proceso productor
+    private static process PProducer{
+        int valor = 0;
+        int pos = 0; //para recorrer el vector
+        while (pos < N) { 
+            buffer[pos]=valor;
+            System.out.println("Pos: "+pos+" se produce: " + valor);
+            valor++; pos++;
+            V(puedoConsumir);   //Senial al consumidor de que hay algo disponible
+            call pausa(200); 
+        }   
+        System.out.println("BUFFER PRODUCIDO COMPLETAMENTE");
+    }
+
+    // Proceso Consumidor
+    private static process PConsumer{
+        int pos = 0;
+        while(pos < N) {
+            P(puedoConsumir);   //Espera hasta que haya un item
+            int valor = buffer[pos];
+            System.out.println("Pos: "+pos+" se consume: " + valor);
+            pos++;
+            call pausa(500);
+        }
+        System.out.println("BUFFER CONSUMIDO COMPLETAMENTE");
+    }
+
+    //Metodo principal
+    public static void main(String[] args) {
+
+        try {
+            JR.registerQuiescenceAction(done);     
+        } catch (edu.ucdavis.jr.QuiescenceRegistrationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Accion a ejecutar cuando terminan todos los procesos
+    private static op void done() {
+        System.out.println("FIN");
+    }
+}
+
+    

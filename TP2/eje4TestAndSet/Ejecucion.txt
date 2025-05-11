@@ -1,29 +1,31 @@
+
 root@0e624e50d982:/jr_code/repo-concurrencia/TP2/eje4TestAndSet# jr eje4
 Proceso 24 ingresa a seccion critica
-Proceso 24  sale de la seccion critica
-Proceso 24 ingresa a seccion critica
-Proceso 24  sale de la seccion critica
-Proceso 24 ingresa a seccion critica
-Proceso 24  sale de la seccion critica
-Proceso 24 ingresa a seccion critica
-^Croot@0e624e50d982:/jr_code/repo-concurrencia/TP2/eje4TestAndSet# jr eje4
-Proceso 24 ingresa a seccion critica
-Proceso 24  sale de la seccion critica
-Proceso 23 ingresa a seccion critica
-Proceso 23  sale de la seccion critica
-Proceso 0 ingresa a seccion critica
-Proceso 0  sale de la seccion critica
+	Proceso 24  sale de la seccion critica
 Proceso 5 ingresa a seccion critica
-Proceso 5  sale de la seccion critica
-Proceso 3 ingresa a seccion critica
-Proceso 3  sale de la seccion critica
+	Proceso 5  sale de la seccion critica
+Proceso 12 ingresa a seccion critica
+	Proceso 12  sale de la seccion critica
+Proceso 20 ingresa a seccion critica
+	Proceso 20  sale de la seccion critica
 Proceso 21 ingresa a seccion critica
-Proceso 21  sale de la seccion critica
-Proceso 13 ingresa a seccion critica
-Proceso 13  sale de la seccion critica
+	Proceso 21  sale de la seccion critica
+Proceso 19 ingresa a seccion critica
+	Proceso 19  sale de la seccion critica
 Proceso 2 ingresa a seccion critica
-Proceso 2  sale de la seccion critica
-Proceso 3 ingresa a seccion critica
-Proceso 3  sale de la seccion critica
-Proceso 23 ingresa a seccion critica
-Proceso 23  sale de la seccion critica
+	Proceso 2  sale de la seccion critica
+Proceso 18 ingresa a seccion critica
+	Proceso 18  sale de la seccion critica
+Proceso 21 ingresa a seccion critica
+	Proceso 21  sale de la seccion critica
+Proceso 8 ingresa a seccion critica
+	Proceso 8  sale de la seccion critica
+Proceso 12 ingresa a seccion critica
+	Proceso 12  sale de la seccion critica
+Proceso 1 ingresa a seccion critica
+	Proceso 1  sale de la seccion critica
+Proceso 15 ingresa a seccion critica
+	Proceso 15  sale de la seccion critica
+Proceso 7 ingresa a seccion critica
+
+siempre ingresa de a un proceso a la seccion critica. 

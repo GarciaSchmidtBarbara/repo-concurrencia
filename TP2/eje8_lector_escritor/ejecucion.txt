@@ -1,0 +1,57 @@
+Proceso 0 escribe 6
+Proceso 2 escribe 3
+Proceso 1 escribe 1
+Proceso 3 escribe 6
+Proceso 4 escribe 2
+Proceso 5 escribe 2
+Proceso 6 escribe 2
+Proceso 7 escribe 8
+Proceso 8 escribe 6
+Proceso 9 escribe 5
+Proceso 4 leyendo 5
+Proceso 2 leyendo 5
+    Hay 5 lectores activos
+Proceso 3 leyendo 5
+Proceso 1 leyendo 5
+Proceso 0 leyendo 5
+    Hay 5 lectores activos
+    Hay 4 lectores activos
+    Hay 4 lectores activos
+    Hay 4 lectores activos
+Proceso 8 escribe 7
+Proceso 3 leyendo 7
+    Hay 1 lectores activos
+Proceso 0 escribe 8
+Proceso 6 escribe 4
+Proceso 4 leyendo 4
+    Hay 1 lectores activos
+Proceso 2 leyendo 4
+    Hay 1 lectores activos
+Proceso 0 leyendo 4
+    Hay 1 lectores activos
+Proceso 8 escribe 9
+Proceso 1 leyendo 9
+    Hay 1 lectores activos
+Proceso 6 escribe 5
+Proceso 3 leyendo 5
+    Hay 1 lectores activos
+Proceso 4 escribe 9
+Proceso 0 leyendo 9
+    Hay 1 lectores activos
+Proceso 7 escribe 2
+Proceso 3 leyendo 2
+    Hay 2 lectores activos
+Proceso 2 leyendo 2
+    Hay 1 lectores activos
+Proceso 4 leyendo 2
+    Hay 1 lectores activos
+Proceso 1 leyendo 2
+    Hay 1 lectores activos
+Proceso 1 escribe 6
+Proceso 4 escribe 6
+Proceso 5 escribe 6
+Proceso 9 escribe 2
+Proceso 2 escribe 4
+Proceso 3 escribe 6
+Proceso 1 leyendo 6
+    Hay 1 lectores activos

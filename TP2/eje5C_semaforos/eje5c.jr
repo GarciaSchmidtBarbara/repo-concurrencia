@@ -1,6 +1,6 @@
 //c-	buffer ilimitado, n productores y m consumidores.
-//productores: no se genera condicion de carrera, es el unico que agrega valores
-//consumidores: necesita sincronizacion con semafro para saber cuando consumir
+//productores: necesitan semaforo para acceder al buffer (para no colocarse en el mismo sitio)
+//consumidores: necesita sincronizacion con semafro para saber cuando y donde consumir
 
 import edu.ucdavis.jr.JR;      
 import java.util.LinkedList;
@@ -8,10 +8,11 @@ import java.util.LinkedList;
 public class eje5c{
 
     static LinkedList<Integer> buffer = new LinkedList<Integer>();  //buffer infinito
-    static int valor = 0;
-    private static sem puedoConsumir =0;
-    private static sem mutexC =1;   //semaforo que restinge el acceso al buffer a 1 proceso a la vez
-    private static sem mutexP =1;   
+    private static sem puedoConsumir =0; //sem general
+    private static sem mutexC =1;   //semaforo binario que restinge el acceso al buffer a 1 proceso a la vez
+    private static sem mutexP =1; 
+    private static int N = 5;   //cant productores
+    private static int M = 5;   //cant consumidores
     
     private static op void pausa(int tiempo){  
         try{
@@ -21,39 +22,33 @@ public class eje5c{
     }
 
     //Proceso productor
-    private static process PProducer{
+    private static process PProducer((int i=1; i<=N; i++)){
+        int valor=0;
         while (true) { 
-            P(mutexP);
+            P(mutexP);  //Exclusión mutua para buffer
             buffer.add(valor);
-            System.out.println("Producido: " + valor);
+            System.out.println("Proceso "+i+" produce: " + valor);
             valor++;
-            V(mutexP);
-            call pausa(200);
-            V(puedoConsumir);   //incremento semaforo del consumidor. 
-            
+            V(mutexP);  //libero buffer
+            V(puedoConsumir);   //Señal al consumidor de que hay algo disponible
+            call pausa(500); 
         }   
     }
 
     // Proceso Consumidor
-    private static process PConsumer{
+    private static process PConsumer((int i=1; i<=M; i++)){
         while(true) {
-            P(puedoConsumir);   //decremento semaforo
-            P(mutexC);      //restrinjo el buffer a 1 proceso
+            P(puedoConsumir);   //Espera hasta que haya un item
+            P(mutexC);      //Exclusión mutua para buffer
             int aux = buffer.removeFirst();
-            System.out.println("Consumido: " + aux);
-            V(mutexC);
+            System.out.println("Consumidor "+i+" consume: " + aux);
+            V(mutexC);  //Libera buffer
             call pausa(500);
         }
     }
 
     //Metodo principal
     public static void main(String[] args) {
-        int nProductores = 5;
-        int mConsumidores = 5;
-
-        for (int i = 0; i < nProductores; i++) {
-            new PProducer();
-        }
 
         try {
             JR.registerQuiescenceAction(done);     
@@ -64,7 +59,7 @@ public class eje5c{
 
     // Accion a ejecutar cuando terminan todos los procesos
     private static op void done() {
-        System.out.println("TODOS LOS DATOS PRODUCIDOS, LEIDOS POR EL CONSUMIDOR");
+        System.out.println("ESTO NUNCA VA A PASAR POR EL WHILE TRUE");
     }
 }
 

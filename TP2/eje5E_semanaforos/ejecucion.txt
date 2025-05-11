@@ -1,0 +1,41 @@
+root@0e624e50d982:/jr_code/repo-concurrencia/TP2/eje5E_semanaforos# jr eje5e
+Proceso 0 en Pos: 0 produce: 7
+Proceso 1 en Pos: 1 produce: 0
+	Proceso 4 en Pos: 0 consume: 7
+Proceso 4 en Pos: 2 produce: 3
+Proceso 3 en Pos: 3 produce: 1
+	Proceso 0 en Pos: 1 consume: 0
+Proceso 2 en Pos: 4 produce: 1
+	Proceso 3 en Pos: 2 consume: 3
+	Proceso 2 en Pos: 3 consume: 1
+	Proceso 1 en Pos: 4 consume: 1
+Proceso 0 en Pos: 5 produce: 7
+Proceso 1 en Pos: 6 produce: 4
+	Proceso 4 en Pos: 5 consume: 7
+Proceso 4 en Pos: 7 produce: 0
+Proceso 3 en Pos: 8 produce: 6
+	Proceso 0 en Pos: 6 consume: 4
+Proceso 2 en Pos: 9 produce: 6
+	Proceso 3 en Pos: 7 consume: 0
+	Proceso 2 en Pos: 8 consume: 6
+	Proceso 1 en Pos: 9 consume: 6
+Proceso 0 en Pos: 0 produce: 9
+Proceso 1 en Pos: 1 produce: 8
+	Proceso 4 en Pos: 0 consume: 9
+Proceso 4 en Pos: 2 produce: 7
+Proceso 3 en Pos: 3 produce: 8
+	Proceso 0 en Pos: 1 consume: 8
+Proceso 2 en Pos: 4 produce: 3
+	Proceso 3 en Pos: 2 consume: 7
+	Proceso 2 en Pos: 3 consume: 8
+	Proceso 1 en Pos: 4 consume: 3
+Proceso 0 en Pos: 5 produce: 7
+Proceso 1 en Pos: 6 produce: 1
+	Proceso 4 en Pos: 5 consume: 7
+Proceso 4 en Pos: 7 produce: 8
+Proceso 3 en Pos: 8 produce: 7
+	Proceso 0 en Pos: 6 consume: 1
+Proceso 2 en Pos: 9 produce: 7
+	Proceso 3 en Pos: 7 consume: 8
+	Proceso 2 en Pos: 8 consume: 7
+	Proceso 1 en Pos: 9 consume: 7

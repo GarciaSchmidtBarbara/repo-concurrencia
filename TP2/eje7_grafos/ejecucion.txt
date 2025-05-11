@@ -1,0 +1,12 @@
+root@0e624e50d982:/jr_code/repo-concurrencia/TP2/eje7_grafos# jr eje7
+Proceso 1 inicia
+Proceso 1 termina
+    Proceso 2 inicia
+        Proceso 3 inicia
+    Proceso 2 termina
+            Proceso 4 inicia
+    Proceso 3 termina
+            Proceso 4 termina
+                Proceso 5 inicia
+                Proceso 5 termina
+FIN

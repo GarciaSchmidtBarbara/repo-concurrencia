@@ -1,0 +1,47 @@
+//6-semaforos binarios
+//varios procesos que suman 1 a la variable x compartida
+
+import edu.ucdavis.jr.JR;
+
+public class eje6{
+
+
+    static int x; 
+    static sem mutex =1; 
+ 
+    private static op void pausa(int tiempo){  
+        try{
+                Thread.sleep(tiempo);
+        }catch(java.lang.Exception e){}
+
+    }
+
+    //Proceso productor
+    private static process proceso((int i=0; i<10; i++)){
+        while (true) { 
+            P(mutex);
+            x++;
+            System.out.println("Proceso: "+i+" --> x = " + x);
+            V(mutex);   //Senial al consumidor de que hay algo disponible
+            int tiempo=(int)(Math.random() * 500)+100; //creo pausas aleatorias para que se los procesos de intercalen
+            call pausa(tiempo); 
+        }   
+    }
+
+    //Metodo principal
+    public static void main(String[] args) {
+        System.out.println("VALOR INICIAL DE X = " + x);
+        try {
+            JR.registerQuiescenceAction(done);     
+        } catch (edu.ucdavis.jr.QuiescenceRegistrationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Accion a ejecutar cuando terminan todos los procesos
+    private static op void done() {
+        System.out.println("FIN");
+    }
+}
+
+    

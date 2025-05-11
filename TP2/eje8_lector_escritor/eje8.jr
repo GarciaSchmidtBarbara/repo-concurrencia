@@ -1,0 +1,77 @@
+//8.a lectores y escritores sobre un archivo. PRIORIDAD LECTORES
+//lectores: todos pueden acceder a la vez.
+//escritores: solo 1 puede acceder a la vez. 
+
+import edu.ucdavis.jr.JR;
+
+public class eje8{
+   
+    static int L = 5; 
+    static int E = 10;
+    static int numero = 10;
+    static sem puedoLeer =L;    //semaforo contador
+    static sem puedoEscribir =1;    //semaforo binario
+    static int cantE = 0; //para saber cuantos lectores hay leyendo
+    static sem mutexE = 1; //proteger la var cantE
+    
+    private static op void pausa(int tiempo){  
+        try{
+            Thread.sleep(tiempo);
+        }catch(java.lang.Exception e){}
+    }
+
+    private static process Escritores((int i=0; i<E; i++)){
+        while (true) { 
+            P(puedoEscribir);   // Espera que no haya otros escritores ni lectores
+            numero = (int)(Math.random() * 10);
+            System.out.println("Proceso "+i+" escribe " + numero);
+            V(puedoEscribir);
+            int tiempo=(int)(Math.random() * 500)+100; 
+            call pausa(tiempo);
+        }   
+    }
+
+    private static process Lectores((int i=0; i<L; i++)){
+        while(true) {
+            P(puedoLeer);
+            P(mutexE);
+            cantE++;
+            if(cantE ==1){
+                P(puedoEscribir);   //el primero bloquea a los escritores
+            }
+            V(mutexE);
+
+            System.out.println("Proceso "+i+" leyendo " + numero);
+            P(mutexE);
+            System.out.println("    Hay "+cantE+" lectores activos");
+            V(mutexE);
+
+            P(mutexE);
+            cantE--;
+            if (cantE == 0) {
+                V(puedoEscribir);
+            }
+            V(mutexE);
+
+            V(puedoLeer);
+            int tiempo=(int)(Math.random() * 200)+100; 
+            call pausa(tiempo);
+        }
+    }
+
+    //Metodo principal
+    public static void main(String[] args) {
+        try {
+            JR.registerQuiescenceAction(done);     
+        } catch (edu.ucdavis.jr.QuiescenceRegistrationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Accion a ejecutar cuando terminan todos los procesos
+    private static op void done() {
+        System.out.println("FIN");
+    }
+}
+
+    

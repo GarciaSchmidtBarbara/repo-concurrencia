@@ -17,7 +17,7 @@ public class eje5b{
 
     }
 
-    //Proceso productor
+    //Proceso productor. primero agrega un valor y luego avisa al consumidor
     private static process PProducer{
         int valor=0;
         while (true) { 
