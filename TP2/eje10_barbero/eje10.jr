@@ -1,17 +1,18 @@
-//10 a)	Puede haber N clientes esperando en la barbería, además de quien está sentado en el sillón de corte.
+//10 a)	Puede haber N clientes esperando en la barberia, ademas de quien esta sentado en el sillon de corte.
 import edu.ucdavis.jr.JR;
 
 public class eje10{
 
     static final int N = 5;
     static int clientes_esperando = 0; 
-    static mutexC = 1 ;
+    static sem mutexC = 1 ;
+    static sem puedoEsperar = N;    //pueden esperar solo 5 clientes
 
-    static sem puedoAtender = 1;  //semaforo binario que indica si el barbero esta libre o no
+    static sem sillon = 1;  //un sillon de corte, puede ocuparlo el barbero o el cliente 
     
-    
-    private static op void pausa(int tiempo){  
+    private static op void cortarPelo(int tiempo){  
         try{
+            System.out.println("Cortando el pelo a un cliente");
             Thread.sleep(tiempo);
         }catch(java.lang.Exception e){}
     }
@@ -20,15 +21,30 @@ public class eje10{
         while (true) { 
             P(mutexC);
             if(clientes_esperando==0){
-                P(puedoAtender);    //espero a que hayan clientes, me duermo
+                P(sillon);  //ocupo el sillon, me duermo
+                System.out.println("Barbero durmiendo, no hay clientes");
             }
             V(mutexC);
+            V(sillon);  //libero el sillon
+            V(puedoEsperar); //libero uno de la espera
+            P(sillon);  //ocupo el sillon con un cliente
+            System.out.println("Barbero atendiendo");
+            int tiempo=(int)(Math.random() * 500)+100;
+            call cortarPelo(tiempo);
+            V(sillon); //libero el sillon del cliente
         }   
     }
 
     private static process Cliente((int i=0; i<10; i++)){
         while(true) {
+            P(mutexC);
+            if(clientes_esperando<5){
+                clientes_esperando++;
+                P(puedoEsperar);
+                V(mutexC);
+            } else break; //si no hay lugar para esperar me voy
             
+            V(mutexC);    
         }
     }
 
