@@ -55,7 +55,7 @@ public class eje8b{
             int tiempo=(int)(Math.random() * 500)+100; 
             call pausa(tiempo);
         }   
-    }
+    } 
 
     private static process Lectores((int i=0; i<L; i++)){
         while(true) {

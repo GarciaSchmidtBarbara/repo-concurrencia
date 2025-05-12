@@ -1,3 +1,4 @@
+
 //El primer proceso entrara en la seccion critica de inmediato, ya que TestAndSet(lock) devolvera false y saldra del bucle while.
 //Los demas procesos no pueden entrar ahora, ya que lock esta establecido en true, por lo que el bucle while continua siendo true. 
 //Se garantiza la exclusion mutua. Una vez que el primer proceso sale de la seccion critica, lock cambia a false. 
@@ -8,31 +9,35 @@ import edu.ucdavis.jr.JR;
 public class eje4{
     private static boolean lock =false;
 
-    private static op void pausa(){ 
-        try{
-            Thread.sleep(1000);
-        }catch(java.lang.Exception e){}
+    private static void adquirir(){ 
+        while(TestAndSet()){
+            try{
+                Thread.sleep(1000);
+            }catch(java.lang.Exception e){}
+        }
 
     }
 
-    private static boolean TestAndSet(){    //algoritmo de Stallings
+    public static void liberar(){
+        lock = false;
+    }
+
+    private static op boolean TestAndSet(){   
         boolean anterior = lock;
-        lock = 
-        return lock;      
+        lock = true:
+        return anterior;      
     }
 
     //en la declaracion se incluye un for que crea 5 procesos, c/u con un id propio
     private static process Proceso((int id = 0; id < 25; id++)){
         while (true){
-            while(!TestAndSet())       //si lock esta en verdadero (ocupado) se queda esperando. cuando lock este en falso (libre) continua
-                call pausa();
-            System.out.println("Proceso " + id + " ingresa a seccion critica");
-            call pausa();
-            System.out.println("Proceso " + id + "  sale de la seccion critica");
-            lock =false;
-            call pausa();
-        }
-       
+            call adquirir();
+            System.out.println("proceso obtuvo el recurso");
+            try{
+                Thread.sleep(1000);
+            }catch(java.lang.Exception e){}
+            call liberar();
+        }   
     }
 
     //Metodo principal

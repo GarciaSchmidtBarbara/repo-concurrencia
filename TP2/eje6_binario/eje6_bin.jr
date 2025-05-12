@@ -1,0 +1,29 @@
+Clase SemaforoBinario
+
+cola: lista de procesos
+sm: int
+sem mutex = 1   //semaforo general para excus mutua
+
+waitBin(sem sm){
+    P(mutex)
+	if(mutex==1){
+        sm = 0
+    }
+    else {
+        agregarProcesoalaCola
+        bloquearEsteProceso
+    }
+    V(mutex)
+}
+signalBin(sem sm){
+    P(mutex)
+	if(mutex==1){
+        sm = 0
+    }
+    else {
+        agregarProcesoalaCola
+        bloquearEsteProceso
+    }
+    V(mutex)
+}
+		

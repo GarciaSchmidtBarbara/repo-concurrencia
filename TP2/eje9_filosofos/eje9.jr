@@ -3,7 +3,7 @@ import edu.ucdavis.jr.JR;
 
 public class eje9{
    
-    private static cap void () en_espera[] = new cap void()[5];
+    private static cap void () fork[] = new cap void()[5];
     static{
         for (int i=0; i<5; i++){    //inicio los 5 semaforos en 1
             fork[i] = new sem(1);
