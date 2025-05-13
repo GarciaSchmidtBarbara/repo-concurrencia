@@ -1,4 +1,7 @@
-//7
+//7 USO DE BARRERAS. 
+//Un signaling semaphore s es usualmente inicializado a 0. 
+//Un proceso señaliza la ocurrencia de un evento ejecutando signal(s) 
+//y otro proceso espera la ocurrencia de ese evento ejecutando wait(s);
 
 import edu.ucdavis.jr.JR;
 

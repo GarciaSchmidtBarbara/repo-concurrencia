@@ -10,43 +10,37 @@ public class eje5e{
 
     static int N = 5;   static int M = 5; static int X=10;
     static int[]buffer = new int[X];  //buffer acotado (EJEMPLO CIRCULAR.)
-    static sem puedoConsumir =0;
+
+    static sem puedoConsumir =0; //full
+    static sem puedoEscribir = N; //empty
     static sem mutexP = 1;
     static int posP = 0; //para recorrer el vector
     static sem mutexC = 1; 
     static int posC = 0; //para recorrer el vector
 
-    
-    
-    private static op void pausa(int tiempo){  
-        try{
-            Thread.sleep(tiempo);
-        }catch(java.lang.Exception e){}
-    }
-
-    //Procesos productores
     private static process PProducer((int i=0; i<N; i++)){
         while (true) { 
             int valor = (int)(Math.random() * 10);
-            P(mutexP);  //exclusion mutua entre productores
+            P(puedoEscribir); //van a producir mientras haya lugar disponible en el vector
+            P(mutexP);  //restrinjo acceso a variable pos
             buffer[posP]= valor;
             System.out.println("Proceso "+i+" en Pos: "+posP+" produce: " + valor);
-            posP = (posP + 1) % X; //logra un vector circular
-            V(mutexP);  //libero buffer
+            posP = (posP + 1) % X; 
+            V(mutexP);  //libero variable pos
             V(puedoConsumir);   //Senial al consumidor de que hay algo disponible
             call pausa(500); 
         }   
     }
 
-    // Procesos Consumidores
     private static process PConsumer((int i=0; i<M; i++)){
         while(true) {
             P(puedoConsumir);   //Espera hasta que haya un item
-            P(mutexC);  //exclusion mutua entre consumidores
+            P(mutexC);  //restrinjo acceso a variable pos
             int valor = buffer[posC];
             System.out.println("Proceso "+i+" en Pos: "+posC+" consume: " + valor);
             posC= (posC + 1) % X;
-            V(mutexC);  //libero buffer
+            V(mutexC);  //libero variable pos
+            V(puedoEscribir); //aviso que se leyo un espacio, ahora se puede volver a escribir en el
             call pausa(500);
         }
     }
@@ -59,6 +53,12 @@ public class eje5e{
         } catch (edu.ucdavis.jr.QuiescenceRegistrationException e) {
             e.printStackTrace();
         }
+    }
+
+    private static op void pausa(int tiempo){  
+        try{
+            Thread.sleep(tiempo);
+        }catch(java.lang.Exception e){}
     }
 
     // Accion a ejecutar cuando terminan todos los procesos

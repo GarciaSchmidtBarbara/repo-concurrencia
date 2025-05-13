@@ -1,6 +1,8 @@
-//d- buffer acotado (circular), 1 productor y 1 consumidor.
-//productor: no necesita semaforo ya que puede acceder siempre al buffer
+//d- buffer acotado o limitado (circular), 1 productor y 1 consumidor.
+//productor: no puede sobreescribir lo que produjo.
 //consumidor: necesita semanaforo para cceder cuando haya un dato a consumir
+//i) no se puede insertar un elemento cuando el buffer está lleno y 
+//ii) no se puede extraer un elemento cuando el buffer está vacío.
 
 import edu.ucdavis.jr.JR;
 
@@ -9,8 +11,9 @@ public class eje5d{
 
     static int N = 5;   //cant espacios del buffer
     static int[]buffer = new int[N];  //buffer acotado (EJEMPLO CON NO CIRCULAR.)
-    static sem puedoConsumir =0; 
 
+    static sem puedoProducir = N; //controla numero de espacios libres. Si se llena el vector debe esperar
+    static sem puedoConsumir = 0; //controla numero de espacios llenos. 
     
     
     private static op void pausa(int tiempo){  
@@ -24,10 +27,12 @@ public class eje5d{
     private static process PProducer{
         int valor = 0;
         int pos = 0; //para recorrer el vector
-        while (pos < N) { 
+        while (true) { 
+            P(puedoProducir);
             buffer[pos]=valor;
             System.out.println("Pos: "+pos+" se produce: " + valor);
-            valor++; pos++;
+            pos=(pos+1)%N;
+            valor++;
             V(puedoConsumir);   //Senial al consumidor de que hay algo disponible
             call pausa(200); 
         }   
@@ -37,11 +42,12 @@ public class eje5d{
     // Proceso Consumidor
     private static process PConsumer{
         int pos = 0;
-        while(pos < N) {
+        while(true) {
             P(puedoConsumir);   //Espera hasta que haya un item
             int valor = buffer[pos];
             System.out.println("Pos: "+pos+" se consume: " + valor);
-            pos++;
+            pos=(pos+1)%N;
+            V(puedoProducir); //senial al productor de que libere un espacio
             call pausa(500);
         }
         System.out.println("BUFFER CONSUMIDO COMPLETAMENTE");
