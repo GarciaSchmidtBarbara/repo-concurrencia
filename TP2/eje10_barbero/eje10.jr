@@ -5,47 +5,57 @@ public class eje10{
 
     static final int N = 5;
     static int clientes_esperando = 0; 
-    static sem mutexC = 1 ;
-    static sem puedoEsperar = N;    //pueden esperar solo 5 clientes
+    static sem mutex = 1 ;
 
-    static sem sillon = 1;  //un sillon de corte, puede ocuparlo el barbero o el cliente 
-    
-    private static op void cortarPelo(int tiempo){  
-        try{
-            System.out.println("Cortando el pelo a un cliente");
-            Thread.sleep(tiempo);
-        }catch(java.lang.Exception e){}
-    }
+    static sem puedoEsperar = N;    //pueden esperar solo 5 clientes
+    static sem puedoDormir = 0; 
+    static sem barberoListoParaCortar = 0;
+    static sem clienteEnSillon = 0;
+    static sem barberoListoParaCobrar = 0;
+    static sem clientePaga = 0;
+    static sem sillaEspera = 0;
+
 
     private static process Barbero{
         while (true) { 
-            P(mutexC);
+            P(mutex);
             if(clientes_esperando==0){
-                P(sillon);  //ocupo el sillon, me duermo
+                V(mutex);
                 System.out.println("Barbero durmiendo, no hay clientes");
-            }
-            V(mutexC);
-            V(sillon);  //libero el sillon
-            V(puedoEsperar); //libero uno de la espera
-            P(sillon);  //ocupo el sillon con un cliente
-            System.out.println("Barbero atendiendo");
-            int tiempo=(int)(Math.random() * 500)+100;
-            call cortarPelo(tiempo);
-            V(sillon); //libero el sillon del cliente
+                P(puedoDormir);  // me duermo    
+            }else V(mutex);
+
+            P(sillaEspera);
+            V(barberoListoParaCortar);  //aca genero una barrera
+            P(clienteEnSillon);
+            System.out.println("Barbero cortando el pelo");
+
+            V(barberoListoParaCobrar);
+            P(clientePaga);
+
         }   
     }
 
     private static process Cliente((int i=0; i<10; i++)){
-        while(true) {
-            P(mutexC);
-            if(clientes_esperando<5){
+            P(mutex);
+            if(clientes_esperando<N){
                 clientes_esperando++;
-                P(puedoEsperar);
-                V(mutexC);
-            } else break; //si no hay lugar para esperar me voy
-            
-            V(mutexC);    
-        }
+                if(clientes_esperando==1){
+                    V(puedoDormir);
+                }
+                V(mutex);
+                P(sillaEspera);
+
+                V(clienteEnSillon); //barrera
+                P(barberoListoParaCortar);
+
+                V(clientePaga);
+                P(barberoListoParaCobrar);
+
+                P(mutex);
+                clientes_esperando--;
+            }          
+            V(mutex);   
     }
 
     //Metodo principal
