@@ -1,62 +1,96 @@
-//8.a lectores y escritores sobre un archivo. PRIORIDAD LECTORES
+//8.b lectores y escritores sobre un archivo. PRIORIDAD ESCRITORES
 //lectores: todos pueden acceder a la vez.
 //escritores: solo 1 puede acceder a la vez. 
 
+
+
+
 import edu.ucdavis.jr.JR;
 
-public class eje8{
+public class eje8b{
    
     static int L = 5; 
     static int E = 10;
-    static int numero = 10;
-    static sem puedoLeer =L;    //semaforo contador
-    static sem puedoEscribir =1;    //semaforo binario
-    static int cantE = 0; //para saber cuantos lectores hay leyendo
-    static sem mutexE = 1; //proteger la var cantE
-    
+
+    static sem puedoLeer = 0;    //semaforo contador
+    static int lectores_esperando = 0; 
+    static int lectores_activos = 0;
+
+    static sem puedoEscribir =0;    //semaforo binario
+    static int escritores_esperando = 0; 
+    static int escritores_activos = 0;
+
+    static sem mutex = 1;   //proteje las variables enteras
+
+    private static process Escritores((int i=0; i<E; i++)){
+        while (true) { 
+            P(mutex);
+            escritores_esperando++; 
+            if(lectores_activos>0 || escritores_activos>0){     //si hay alguien activo   
+                V(mutex);
+                P(puedoEscribir);   //espero
+                P(mutux);
+            }
+            
+            //cuando el proceso pueda continuar..
+            escritores_esperando--;
+            escritores_activos++;
+            V(mutex);
+            System.out.println("Proceso "+i+" escribiendo...");
+            P(mutex);
+            escritores_activos--;
+            if(escritores_esperando>0){
+                V(puedoEscribir);
+            }else if (lectores_esperando>0){
+                for (int j = 0; j < lectores_esperando; j++) {
+                    V(podemosLeer); //libero a todos los lectores que esten esperando en este momento
+                }
+            }
+            V(mutex);
+        }   
+    } 
+
+    private static process Lectores((int i=0; i<L; i++)){
+        while(true) {
+            P(mutex);
+            if(escritores_activos > 0 || escritores_esperando > 0){ 
+               lectores_esperando++;
+                V(mutex);
+                P(puedoLeer);   // espera a que le den permiso
+            } else {
+                lectores_activos++;  // puede leer directamente
+                V(mutex);
+                System.out.println("Proceso " + i + " leyendo..."); 
+
+                P(mutex);
+                lectores_activos--;
+                if(lectores_activos == 0 && escritores_esperando > 0){
+                    V(puedoEscribir);
+                }
+                V(mutex);
+                continue;
+            }
+
+            // Si estaba esperando, llega acá..
+            P(mutex);
+            lectores_esperando--;
+            lectores_activos++;
+            V(mutex);
+            System.out.println("Proceso "+i+" leyendo...");
+            
+            P(mutex);
+            lectores_activos--;
+            if(lectores_activos==0 && escritores_esperando>0){  //si no hay lectores activos y hay escritores esperando
+                V(puedoEscribir);
+            }
+            V(mutex);
+        }
+    }
+
     private static op void pausa(int tiempo){  
         try{
             Thread.sleep(tiempo);
         }catch(java.lang.Exception e){}
-    }
-
-    private static process Escritores((int i=0; i<E; i++)){
-        while (true) { 
-            P(puedoEscribir);   // Espera que no haya otros escritores ni lectores
-            numero = (int)(Math.random() * 10);
-            System.out.println("Proceso "+i+" escribe " + numero);
-            V(puedoEscribir);
-            int tiempo=(int)(Math.random() * 500)+100; 
-            call pausa(tiempo);
-        }   
-    }
-
-    private static process Lectores((int i=0; i<L; i++)){
-        while(true) {
-            P(puedoLeer);
-            P(mutexE);
-            cantE++;
-            if(cantE ==1){
-                P(puedoEscribir);   //el primero bloquea a los escritores
-            }
-            V(mutexE);
-
-            System.out.println("Proceso "+i+" leyendo " + numero);
-            P(mutexE);
-            System.out.println("    Hay "+cantE+" lectores activos");
-            V(mutexE);
-
-            P(mutexE);
-            cantE--;
-            if (cantE == 0) {
-                V(puedoEscribir);
-            }
-            V(mutexE);
-
-            V(puedoLeer);
-            int tiempo=(int)(Math.random() * 200)+100; 
-            call pausa(tiempo);
-        }
     }
 
     //Metodo principal
