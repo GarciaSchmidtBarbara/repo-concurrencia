@@ -1,0 +1,55 @@
+import edu.ucdavis.jr.JR;
+class eje12{
+    static sem vulnerable_a_blanca = 0;
+    static sem vulnerable_a_roja = 0;
+    static sem ataque_blanca = 0;
+    static sem ataque_roja = 0;
+    static int cant_muertos = 0;
+    static sem mutex = 1;
+
+    private process Organismo((int i=0; i<100; i++)){
+        private int cantidad_ataques_blancas = 0;
+        private int cantidad_ataques_rojas = 0;
+        while(cantidad_ataques_blancas<4){
+            V(vulnerable_a_blanca);
+            P(ataque_blanca);
+            cantidad_ataques_blancas--;
+        }
+        while(cantidad_ataques_rojas<2){
+            V(vulnerable_a_roja);
+            P(ataque_roja);
+            cantidad_ataques_rojas--;
+        }
+        //organismo muere
+        P(mutex);
+        cant_muertos++;
+        V(mutex);
+    }
+
+    private process Bacteria_blanca((int i=0; i<1000; i++)){
+        P(vulnerable_a_blanca);
+        V(ataque_blanca);
+    }
+
+    private process Bacteria_roja((int i=0; i<2000; i++)){
+        P(vulnerable_a_roja);
+        V(ataque_roja);
+    }
+
+    //Metodo principal
+    public static void main(String[] args) {
+        try {
+            JR.registerQuiescenceAction(done);     
+        } catch (edu.ucdavis.jr.QuiescenceRegistrationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Accion a ejecutar cuando terminan todos los procesos
+    private static op void done() {
+        if(cant_muertos=100){
+            System.out.println("Todos los orgnismos muerto");
+        } else System.out.println("Quedaron "+(100-cant_muertos)+' organismos vivos');
+
+    }
+}

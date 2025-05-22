@@ -1,0 +1,21 @@
+import edu.ucdavis.jr.JR;
+
+static int s = 1;
+static sem mutex = 1;
+
+private process wait{
+    while (true){
+        P(mutex);
+        if(s>0){
+            s--;
+        }
+        V(mutex);
+    }
+}
+private process signal{
+    while (true){
+        P(mutex);
+        s++;
+        V(mutex);
+    }
+}
