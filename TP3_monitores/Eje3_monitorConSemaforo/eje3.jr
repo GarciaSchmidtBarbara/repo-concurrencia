@@ -1,0 +1,93 @@
+/*Ejemplo: ejercicio parcial 2021.2 Dos autos salen de a uno desde 0 a A y luego a B. 
+en B salen los dos juntos a C y de C a D igual. */
+
+/*SIMULAMOS UN MONITOR CON SEMAFOROS
+class semaforoMonitor {
+
+    sem colaEspera = 0; // Valor inicial del semaforo
+    sem ocupado = 1; //simula exclusion mutua
+    // para el monitor, solo un proceso puede acceder al monitor a la vez
+    int count = 1; // Contador de recursos disponibles
+
+    public void Swait() {
+        P(ocupado); //ocupo al monitor
+        count--;
+        if (count < 0) P(colaEspera); //Simula espera condicional
+        V(ocupado); //libero el monitor
+    }
+
+    public void Ssignal() {
+        P(ocupado);
+        count++;
+        if (count <= 0) V(colaEspera); // si hay procesos bloqueados, despierto uno
+        V(ocupado);
+    }
+
+}
+*/
+// Definicion de la segunda clase (puede ser public si el archivo se llama igual)
+public class eje3 {
+
+    private static semaforoMonitor A = new semaforoMonitor();
+    private static semaforoMonitor B = new semaforoMonitor(); 
+    private static semaforoMonitor A1enB = new semaforoMonitor();
+    private static semaforoMonitor A2enB = new semaforoMonitor(); 
+    private static semaforoMonitor A1enC = new semaforoMonitor();
+    private static semaforoMonitor A2enC = new semaforoMonitor(); 
+
+    public static void main(String... args) {}
+
+    private static process Auto1 {
+        A.Swait(); // espera poder salir de 0 a A
+        System.out.println("Auto 1 sale de 0 a A");
+        delay(1000); // Simula tiempo de viaje
+
+        B.Swait();
+        System.out.println("Auto 1 sale de A a B");
+        A.Ssignal(); // libera A para que otro auto pueda salir
+        delay(1000); // Simula tiempo de viaje
+        B.Ssignal(); // libera B para que otro auto pueda salir
+
+        //barrera
+        A1enB.Ssignal(); // aviso a Auto2 que estoy en B
+        System.out.println("Auto 1 espera en B a Auto 2");
+        A2enB.Swait(); // espera en B a Auto 2
+
+        //barrera
+        A1enC.Ssignal(); // aviso a Auto2 que estoy en C
+        System.out.println("Auto 1 espera en C a Auto 2");
+        A2enC.Swait(); // espera en C a Auto 2
+
+        System.out.println("Auto 1 llego a D");
+    }
+
+    private static process Auto2 {
+        A.Swait(); // espera poder salir de 0 a A
+        System.out.println("Auto 2 sale de 0 a A");
+        delay(1000); // Simula tiempo de viaje
+
+        B.Swait();
+        System.out.println("Auto 2 sale de A a B");
+        A.Ssignal(); // libera A para que otro auto pueda salir
+        delay(1000); // Simula tiempo de viaje
+        B.Ssignal(); // libera B para que otro auto pueda salir
+
+        //barrera
+        A2enB.Ssignal(); // aviso a Auto 1 que estoy en B
+        System.out.println("Auto 2 espera en B a Auto 1");
+        A1enB.Swait(); // espera en B a Auto 1
+
+        //barrera
+        A2enC.Ssignal(); // aviso a Auto 1 que estoy en C
+        System.out.println("Auto 2 espera en C a Auto 1");
+        A1enC.Swait(); // espera en C a Auto 1
+
+        System.out.println("Auto 2 llego a D");
+    }
+
+    private static op void delay(int tiempo) {  
+        try {
+            Thread.sleep(tiempo);
+        } catch(java.lang.Exception e) {}
+    }
+}

@@ -1,0 +1,25 @@
+//SIMULAMOS UN MONITOR CON SEMAFOROS
+//simular es un semaforo general con capacidad de 5.
+
+public class semaforoMonitor {
+
+    sem colaEspera = 0; // Valor inicial del semaforo
+    sem ocupado =1; //simula exclusion mutua
+    // para el monitor, solo un proceso puede acceder al monitor a la vez
+    int count = 1; // Contador de recursos disponibles
+
+    public void Swait() {
+        P(ocupado); //ocupo al monitor
+        count--;
+        if (count < 0) P(colaEspera); //Simula espera condicional
+        V(ocupado); //libero el monitor
+    }
+
+    public void Ssignal() {
+        P(ocupado);
+        count++;
+        if (count <= 0) V(colaEspera); // si hay procesos bloqueados, despierto uno
+        V(ocupado);
+    }
+
+}

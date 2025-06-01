@@ -1,0 +1,29 @@
+//RESUELTO CON MONITOR QUE SIMULA UN SEMANAFORO GENERAL
+//varios procesos queriendo imprimir por pantalla
+//El monitor permite que solo la cantidad habilitada de procesos (5) imprima a la vez
+
+public class eje2 {
+    private static final int N = 12; 
+
+    private static monitorSemaforo m = new monitorSemaforo("Monitor LectoresEscritores"); //The monitor
+
+    public static void main(String... args){}
+
+    private static process Escritor((int i = 0; i <= N; i++)){
+        while(true){
+            m.Mwait();
+            System.out.println(i + " ESCRIBE");  //solo podran escribir de a 5
+            delay(1000);
+            System.out.println(i + " SALE");
+            delay(1000);
+            m.Msignal();
+        }
+    }
+
+    private static op void delay(int tiempo){  
+        try{
+                Thread.sleep(tiempo);
+        }catch(java.lang.Exception e){}
+
+    }
+}

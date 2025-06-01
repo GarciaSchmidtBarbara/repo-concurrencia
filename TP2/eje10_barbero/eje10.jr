@@ -36,7 +36,7 @@ public class eje10{
         }   
     }
 
-    private static process Cliente((int i=0; i<10; i++)){
+    private static process Cliente((int i=0; i<10; i++)){ //ESTO SE HACE PARA QUE HAYAN VARIOS PROCESOS
             P(mutex);
             if(clientes_esperando<N){
                 clientes_esperando++;
