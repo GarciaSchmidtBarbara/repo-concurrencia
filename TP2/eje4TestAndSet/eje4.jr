@@ -8,6 +8,7 @@ import edu.ucdavis.jr.JR;
 
 public class eje4{
     private static boolean lock =false;
+    static sem mutex = 1;
 
     private static op void pausa(){ 
         try{
@@ -17,9 +18,11 @@ public class eje4{
     }
 
     private static op boolean TestAndSet(){   
+        P(mutex);
         boolean anterior = lock;
-        lock = true:
-        return anterior;      
+        lock = true;
+        return anterior;  
+        V(mutex);    
     }
 
     private static process Proceso((int id = 0; id < 25; id++)){

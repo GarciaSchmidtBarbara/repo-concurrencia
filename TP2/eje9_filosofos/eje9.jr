@@ -36,6 +36,7 @@ public class eje9{
             } 
             veces--;
             V(mutexV);
+            
             P(fork[i]);     //toma tenedor izq
             int derecha = (i+1) % 5;
             P(fork[derecha]); //toma tenedor derecho

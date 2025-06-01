@@ -1,0 +1,29 @@
+public class LectoresEscritores {
+    private static final int N = 12; 
+
+    private static Monitor m = new Monitor("Monitor LectoresEscritores"); //The monitor
+
+    public static void main(String... args){}
+
+    private static process Lector((int i = 0; i <= N; i++)){
+        while(true){
+            System.out.println(i + " lee : " + m.leer());
+            delay(1000);
+            m.salir();
+        }
+    }
+
+    private static process Escritor((int i = 0; i <= N; i++)){
+        while(true){
+             System.out.println(i + " escribe : " + m.escribir(i));
+             delay(1000);
+        }
+    }
+
+    private static op void delay(int tiempo){  
+        try{
+                Thread.sleep(tiempo);
+        }catch(java.lang.Exception e){}
+
+    }
+}
