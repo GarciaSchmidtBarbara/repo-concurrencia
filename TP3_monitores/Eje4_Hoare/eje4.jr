@@ -1,0 +1,44 @@
+//4.	Use monitores de Hoare para implementar una solucion al problema de los lectores y escritores.
+import edu.ucdavis.jr.JR;
+public class eje4 {
+    private static final int N = 12; 
+
+    private static MonitorHoare m = new MonitorHoare("Monitor ProductorConsumidor"); //The monitor
+
+    private static process Lector((int i = 0; i <= N; i++)){
+        while(true){
+            m.leer();
+            delay(1000);
+            m.salir();
+        }
+    }
+
+    private static process Escritor((int i = 0; i <= N; i++)){
+        while(true){
+            m.escribir(i);
+            delay(1000);
+        }
+    }
+
+    private static op void delay(int tiempo){  
+        try{
+                Thread.sleep(tiempo);
+        }catch(java.lang.Exception e){}
+
+    }
+
+    //Metodo principal
+    public static void main(String[] args) {
+        try {
+            JR.registerQuiescenceAction(done);     
+        } catch (edu.ucdavis.jr.QuiescenceRegistrationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Accion a ejecutar cuando terminan todos los procesos
+    private static op void done() {
+        System.out.println("fin");
+
+    }
+}

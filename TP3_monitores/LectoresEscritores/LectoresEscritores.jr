@@ -7,7 +7,8 @@ public class LectoresEscritores {
 
     private static process Lector((int i = 0; i <= N; i++)){
         while(true){
-            System.out.println(i + " lee : " + m.leer());
+            System.out.println(i + " lee" )
+            m.leer();
             delay(1000);
             m.salir();
         }

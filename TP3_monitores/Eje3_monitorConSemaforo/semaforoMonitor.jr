@@ -3,23 +3,29 @@
 
 public class semaforoMonitor {
 
-    sem colaEspera = 0; // Valor inicial del semaforo
-    sem ocupado =1; //simula exclusion mutua
-    // para el monitor, solo un proceso puede acceder al monitor a la vez
-    int count = 1; // Contador de recursos disponibles
+    sem mutex = 1;         // Exclusion mutua: permite 1 proceso en el monitor
+    sem colaCond = 0;      // Cola para condicion
+    int esperando = 0;     // Cantidad de procesos esperando
+    int recurso = 1;       // Simula un recurso compartido
 
     public void Swait() {
-        P(ocupado); //ocupo al monitor
-        count--;
-        if (count < 0) P(colaEspera); //Simula espera condicional
-        V(ocupado); //libero el monitor
+        P(mutex);          // Entrar al monitor
+        recurso--;
+        if (recurso < 0) {
+            esperando++;
+            V(mutex);      // Salir del monitor para esperar
+            P(colaCond);   // Esperar en la cola de condicion
+        }
+        V(mutex);          // Salir del monitor si no espera
     }
 
     public void Ssignal() {
-        P(ocupado);
-        count++;
-        if (count <= 0) V(colaEspera); // si hay procesos bloqueados, despierto uno
-        V(ocupado);
+        P(mutex);          // Entrar al monitor
+        recurso++;
+        if (esperando > 0) {
+            esperando--;
+            V(colaCond);   // Despertar un proceso
+        }
+        V(mutex);          // Salir del monitor
     }
-
 }
