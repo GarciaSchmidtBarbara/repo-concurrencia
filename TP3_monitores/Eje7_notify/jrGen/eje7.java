@@ -9,16 +9,16 @@ import java.io.Serializable;
 
 import edu.ucdavis.jr.JR;
 
-public class eje4 extends java.lang.Object {
+public class eje7 extends java.lang.Object {
     { JRinit(); }
     
-    public eje4() {
+    public eje7() {
         // Begin Expr2
         super();
         JRprocess();
     }
     private static final int N = 12;
-    private static MonitorHoare m = new MonitorHoare("Monitor ProductorConsumidor");
+    private static MonitorNotify m = new MonitorNotify("Monitor notify");
     private static Op_ext.JRProxyOp JRget_op_Lector_intTovoid()
     {
         return op_Lector_intTovoid;
@@ -27,7 +27,7 @@ public class eje4 extends java.lang.Object {
     public static Op_ext.JRProxyOp op_Lector_intTovoid;
     static class ProcOp_intTovoid_implLector extends ProcOp_ext_impl
     {
-        public ProcOp_intTovoid_implLector(eje4 thisIn) throws RemoteException
+        public ProcOp_intTovoid_implLector(eje7 thisIn) throws RemoteException
         {
         }
         public java.lang.Object call(long JRtimestamp, java.lang.Object [] JRargs) throws RemoteException
@@ -35,7 +35,7 @@ public class eje4 extends java.lang.Object {
             jrvm.ariseAndReceive();  // from caller
             try    {
                 jrvm.setTimestamp(JRtimestamp);
-                eje4.LectorintTovoid(null, null, null, JRargs);
+                eje7.LectorintTovoid(null, null, null, JRargs);
 return null;
             } finally {
                 jrvm.sendAndDie();    // to caller
@@ -64,7 +64,7 @@ return null;
             public void run()
             {
                 try    {
-                    eje4.LectorintTovoid(this.retOp, this.fretOp, this.handler, this.JRargs);
+                    eje7.LectorintTovoid(this.retOp, this.fretOp, this.handler, this.JRargs);
                 } catch (Exception e) {/* should be safe to ignore this exception */}
                 jrvm.threadDeath();
             }
@@ -220,7 +220,7 @@ return null;
     public static Op_ext.JRProxyOp op_Escritor_intTovoid;
     static class ProcOp_intTovoid_implEscritor extends ProcOp_ext_impl
     {
-        public ProcOp_intTovoid_implEscritor(eje4 thisIn) throws RemoteException
+        public ProcOp_intTovoid_implEscritor(eje7 thisIn) throws RemoteException
         {
         }
         public java.lang.Object call(long JRtimestamp, java.lang.Object [] JRargs) throws RemoteException
@@ -228,7 +228,7 @@ return null;
             jrvm.ariseAndReceive();  // from caller
             try    {
                 jrvm.setTimestamp(JRtimestamp);
-                eje4.EscritorintTovoid(null, null, null, JRargs);
+                eje7.EscritorintTovoid(null, null, null, JRargs);
 return null;
             } finally {
                 jrvm.sendAndDie();    // to caller
@@ -257,7 +257,7 @@ return null;
             public void run()
             {
                 try    {
-                    eje4.EscritorintTovoid(this.retOp, this.fretOp, this.handler, this.JRargs);
+                    eje7.EscritorintTovoid(this.retOp, this.fretOp, this.handler, this.JRargs);
                 } catch (Exception e) {/* should be safe to ignore this exception */}
                 jrvm.threadDeath();
             }
@@ -463,7 +463,7 @@ return null;
     public static Op_ext.JRProxyOp op_delay_intTovoid;
     static class ProcOp_intTovoid_impldelay extends ProcOp_ext_impl
     {
-        public ProcOp_intTovoid_impldelay(eje4 thisIn) throws RemoteException
+        public ProcOp_intTovoid_impldelay(eje7 thisIn) throws RemoteException
         {
         }
         public java.lang.Object call(long JRtimestamp, java.lang.Object [] JRargs) throws RemoteException
@@ -471,7 +471,7 @@ return null;
             jrvm.ariseAndReceive();  // from caller
             try    {
                 jrvm.setTimestamp(JRtimestamp);
-                eje4.delayintTovoid(null, null, null, JRargs);
+                eje7.delayintTovoid(null, null, null, JRargs);
 return null;
             } finally {
                 jrvm.sendAndDie();    // to caller
@@ -500,7 +500,7 @@ return null;
             public void run()
             {
                 try    {
-                    eje4.delayintTovoid(this.retOp, this.fretOp, this.handler, this.JRargs);
+                    eje7.delayintTovoid(this.retOp, this.fretOp, this.handler, this.JRargs);
                 } catch (Exception e) {/* should be safe to ignore this exception */}
                 jrvm.threadDeath();
             }
@@ -659,7 +659,7 @@ return null;
     public static Op_ext.JRProxyOp op_done_voidTovoid;
     static class ProcOp_voidTovoid_impldone extends ProcOp_ext_impl
     {
-        public ProcOp_voidTovoid_impldone(eje4 thisIn) throws RemoteException
+        public ProcOp_voidTovoid_impldone(eje7 thisIn) throws RemoteException
         {
         }
         public java.lang.Object call(long JRtimestamp, java.lang.Object [] JRargs) throws RemoteException
@@ -667,7 +667,7 @@ return null;
             jrvm.ariseAndReceive();  // from caller
             try    {
                 jrvm.setTimestamp(JRtimestamp);
-                eje4.donevoidTovoid(null, null, null, JRargs);
+                eje7.donevoidTovoid(null, null, null, JRargs);
 return null;
             } finally {
                 jrvm.sendAndDie();    // to caller
@@ -696,7 +696,7 @@ return null;
             public void run()
             {
                 try    {
-                    eje4.donevoidTovoid(this.retOp, this.fretOp, this.handler, this.JRargs);
+                    eje7.donevoidTovoid(this.retOp, this.fretOp, this.handler, this.JRargs);
                 } catch (Exception e) {/* should be safe to ignore this exception */}
                 jrvm.threadDeath();
             }
@@ -793,12 +793,12 @@ return null;
     }
     
     protected boolean JRcalled = false;
-    protected JReje4 jrresref;
+    protected JReje7 jrresref;
     public Object JRgetjrresref()
     { try {return jrresref.clone(); } catch (Exception e) {/* not gonna happen */ return null; } }
     protected void JRinit() {
     	if(this.JRcalled) return;
-    	jrresref = new JReje4(op_done_voidTovoid, op_delay_intTovoid, op_Escritor_intTovoid, op_Lector_intTovoid);
+    	jrresref = new JReje7(op_done_voidTovoid, op_delay_intTovoid, op_Escritor_intTovoid, op_Lector_intTovoid);
     	this.JRcalled = true;
     }
     private boolean JRproc = false;

@@ -1,4 +1,4 @@
-_monitor MonitorHoare { //sin prioridades
+_monitor MonitorHoare {  //prioridad escritores
     private static final int N = 5; //Size of the buffer
 
     _var int[] buffer = new int[N];
@@ -6,7 +6,6 @@ _monitor MonitorHoare { //sin prioridades
     _var int rear;
     _var int cantLector;
     _var int cantEscritor;
-    _var int lectoresEsperando;
     _var int escritoresEsperando;
 
     _condvar puedoEscribir;
@@ -14,43 +13,36 @@ _monitor MonitorHoare { //sin prioridades
 
     _proc void escribir(int data){
         escritoresEsperando++;
-        //While: despues de despertar, el proceso vuelve a verificar la condicion, 
-        // y solo entra al monitor si se sigue cumpliendo lo que esperaba.
-        while(cantLector > 0 || cantEscritor > 0 ){
+        while(cantLector > 0 || cantEscritor > 0){ //si hay alguien leyendo o escribiendo espero
             _wait(puedoEscribir);
         }
         escritoresEsperando--;
         cantEscritor++;
-
         System.out.println(data + " escribe" );
         buffer[rear] = data;
         rear = (rear + 1) % N;
 
         cantEscritor--;
+        //prioridad escritores
         if(escritoresEsperando>0){
-            _signal(puedoEscribir);
+            _signal(puedoEscribir);//doy paso a los escritores 
         }else{
-            _signal(puedoLeer);
-        } 
+            _signal(puedoLeer);//doy paso a los lectores si hay alguno esperando
+        }
     }
 
     _proc void leer(){
-        lectoresEsperando++;
-        while(cantEscritor>0 || escritoresEsperando>0){
+        while(cantEscritor > 0 || escritoresEsperando>0){
             _wait(puedoLeer);
         }
-        lectoresEsperando--;
         cantLector++;
-
         int result = buffer[front];
         System.out.println(" lee : "+ result);
         front = (front + 1) % N;
 
         cantLector--;
-        if(cantLector == 0 && escritoresEsperando>0){
-            _signal(puedoEscribir);
-        }else{
-            _signal(puedoLeer);
+        if(cantLector == 0){
+            _signal(puedoEscribir); //cuando no haya mas lectores doy paso a los escritores
         }
     }
 

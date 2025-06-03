@@ -1,9 +1,10 @@
-//4.	Use monitores de Hoare para implementar una solucion al problema de los lectores y escritores.
+//7.	Utilice monitores con notify / broadcast para resolver el problema de lectores y escritores.
 import edu.ucdavis.jr.JR;
-public class eje4 {
+public class eje7{
+
     private static final int N = 12; 
 
-    private static MonitorHoare m = new MonitorHoare("Monitor ProductorConsumidor"); //The monitor
+    private static MonitorNotify m = new MonitorNotify("Monitor notify"); //The monitor
 
     private static process Lector((int i = 0; i <= N; i++)){
         while(true){
@@ -18,7 +19,6 @@ public class eje4 {
             delay(1000);
         }
     }
-
     private static op void delay(int tiempo){  
         try{
                 Thread.sleep(tiempo);

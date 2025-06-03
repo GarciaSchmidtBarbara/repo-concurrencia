@@ -1,6 +1,8 @@
-//4.	Use monitores de Hoare para implementar una solucion al problema de los lectores y escritores.
+//6.	Use monitores de Hoare para implementar una solucion al problema de los lectores y escritores 
+//de modo tal que se vean favorecidos escritores.
 import edu.ucdavis.jr.JR;
-public class eje4 {
+public class eje6{
+
     private static final int N = 12; 
 
     private static MonitorHoare m = new MonitorHoare("Monitor ProductorConsumidor"); //The monitor
@@ -18,7 +20,6 @@ public class eje4 {
             delay(1000);
         }
     }
-
     private static op void delay(int tiempo){  
         try{
                 Thread.sleep(tiempo);

@@ -49,7 +49,6 @@ class MonitorHoare extends java.lang.Object {
     private int rear;
     private int cantLector;
     private int cantEscritor;
-    private int lectoresEsperando;
     private int escritoresEsperando;
     private m_condvar puedoEscribir = new m_condvar("puedoEscribir");
     private m_condvar puedoLeer = new m_condvar("puedoLeer");
@@ -141,8 +140,6 @@ class MonitorHoare extends java.lang.Object {
             if (recv_voidTovoid.retOp != null)
                 recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
         }
-        // Begin Expr2
-        lectoresEsperando++;
         JRLoop7: while (cantEscritor > 0 || escritoresEsperando > 0) {
             {
                 m_condvar m_cv = (puedoLeer);
@@ -160,8 +157,6 @@ class MonitorHoare extends java.lang.Object {
             }
         }
         // Begin Expr2
-        lectoresEsperando--;
-        // Begin Expr2
         cantLector++;
         int result = buffer[front];
         // Begin Expr2
@@ -170,21 +165,9 @@ class MonitorHoare extends java.lang.Object {
         front = (front + 1) % N;
         // Begin Expr2
         cantLector--;
-        if (cantLector == 0 && escritoresEsperando > 0) {
+        if (cantLector == 0) {
             {
                 if (((Boolean) (new Cap_ext_((puedoEscribir).JRget_op_m_signal_voidToboolean(), "boolean")).call(jrvm.getTimestamp(), (java.lang.Object[]) null))) {
-                    {
-                        jrvm.sendAndDie();
-                        Recv_ext recv_voidTovoid = op_m_mutex_voidTovoid.recv();
-                        jrvm.ariseAndReceive();
-                        if (recv_voidTovoid.retOp != null)
-                            recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
-                    }
-                }
-            }
-        } else {
-            {
-                if (((Boolean) (new Cap_ext_((puedoLeer).JRget_op_m_signal_voidToboolean(), "boolean")).call(jrvm.getTimestamp(), (java.lang.Object[]) null))) {
                     {
                         jrvm.sendAndDie();
                         Recv_ext recv_voidTovoid = op_m_mutex_voidTovoid.recv();

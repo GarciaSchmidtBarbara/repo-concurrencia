@@ -47,10 +47,9 @@ class MonitorHoare extends java.lang.Object {
     private int[] buffer = new int[N];
     private int front;
     private int rear;
+    private int count;
     private int cantLector;
     private int cantEscritor;
-    private int lectoresEsperando;
-    private int escritoresEsperando;
     private m_condvar puedoEscribir = new m_condvar("puedoEscribir");
     private m_condvar puedoLeer = new m_condvar("puedoLeer");
     
@@ -68,8 +67,6 @@ class MonitorHoare extends java.lang.Object {
             if (recv_voidTovoid.retOp != null)
                 recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
         }
-        // Begin Expr2
-        escritoresEsperando++;
         JRLoop6: while (cantLector > 0 || cantEscritor > 0) {
             {
                 m_condvar m_cv = (puedoEscribir);
@@ -87,8 +84,6 @@ class MonitorHoare extends java.lang.Object {
             }
         }
         // Begin Expr2
-        escritoresEsperando--;
-        // Begin Expr2
         cantEscritor++;
         // Begin Expr2
         System.out.println(data + " escribe");
@@ -97,29 +92,17 @@ class MonitorHoare extends java.lang.Object {
         // Begin Expr2
         rear = (rear + 1) % N;
         // Begin Expr2
+        count++;
+        // Begin Expr2
         cantEscritor--;
-        if (escritoresEsperando > 0) {
-            {
-                if (((Boolean) (new Cap_ext_((puedoEscribir).JRget_op_m_signal_voidToboolean(), "boolean")).call(jrvm.getTimestamp(), (java.lang.Object[]) null))) {
-                    {
-                        jrvm.sendAndDie();
-                        Recv_ext recv_voidTovoid = op_m_mutex_voidTovoid.recv();
-                        jrvm.ariseAndReceive();
-                        if (recv_voidTovoid.retOp != null)
-                            recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
-                    }
-                }
-            }
-        } else {
-            {
-                if (((Boolean) (new Cap_ext_((puedoLeer).JRget_op_m_signal_voidToboolean(), "boolean")).call(jrvm.getTimestamp(), (java.lang.Object[]) null))) {
-                    {
-                        jrvm.sendAndDie();
-                        Recv_ext recv_voidTovoid = op_m_mutex_voidTovoid.recv();
-                        jrvm.ariseAndReceive();
-                        if (recv_voidTovoid.retOp != null)
-                            recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
-                    }
+        {
+            if (((Boolean) (new Cap_ext_((puedoLeer).JRget_op_m_signal_voidToboolean(), "boolean")).call(jrvm.getTimestamp(), (java.lang.Object[]) null))) {
+                {
+                    jrvm.sendAndDie();
+                    Recv_ext recv_voidTovoid = op_m_mutex_voidTovoid.recv();
+                    jrvm.ariseAndReceive();
+                    if (recv_voidTovoid.retOp != null)
+                        recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
                 }
             }
         }
@@ -142,8 +125,8 @@ class MonitorHoare extends java.lang.Object {
                 recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
         }
         // Begin Expr2
-        lectoresEsperando++;
-        JRLoop7: while (cantEscritor > 0 || escritoresEsperando > 0) {
+        cantLector++;
+        if (cantEscritor > 0) {
             {
                 m_condvar m_cv = (puedoLeer);
                 m_cv.JRget_op_m_wait_Cap_voidTovoidXintTovoid().send(jrvm.getTimestamp(), (edu.ucdavis.jr.RemoteHandler) null, new java.lang.Object [] {new Cap_ext_(op_m_return_from_wait_voidTovoid), 0});
@@ -159,32 +142,18 @@ class MonitorHoare extends java.lang.Object {
                 }
             }
         }
-        // Begin Expr2
-        lectoresEsperando--;
-        // Begin Expr2
-        cantLector++;
         int result = buffer[front];
         // Begin Expr2
         System.out.println(" lee : " + result);
         // Begin Expr2
         front = (front + 1) % N;
         // Begin Expr2
+        count--;
+        // Begin Expr2
         cantLector--;
-        if (cantLector == 0 && escritoresEsperando > 0) {
+        if (cantLector == 0) {
             {
                 if (((Boolean) (new Cap_ext_((puedoEscribir).JRget_op_m_signal_voidToboolean(), "boolean")).call(jrvm.getTimestamp(), (java.lang.Object[]) null))) {
-                    {
-                        jrvm.sendAndDie();
-                        Recv_ext recv_voidTovoid = op_m_mutex_voidTovoid.recv();
-                        jrvm.ariseAndReceive();
-                        if (recv_voidTovoid.retOp != null)
-                            recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
-                    }
-                }
-            }
-        } else {
-            {
-                if (((Boolean) (new Cap_ext_((puedoLeer).JRget_op_m_signal_voidToboolean(), "boolean")).call(jrvm.getTimestamp(), (java.lang.Object[]) null))) {
                     {
                         jrvm.sendAndDie();
                         Recv_ext recv_voidTovoid = op_m_mutex_voidTovoid.recv();
