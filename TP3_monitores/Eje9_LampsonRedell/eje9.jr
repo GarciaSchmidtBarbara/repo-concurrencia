@@ -1,0 +1,33 @@
+//9.	Utilizando monitores de Lampson & Redell, proporcione una solución al problema de productor / consumidor con un buffer limitado.
+public class ProducerConsumer {
+
+    private static MonitorLR m = new MonitorLR("Monitor LamsonRedell"); //The monitor
+
+    private static process Producer{
+        int i=1;
+        while(true){
+            m.deposit(i);
+            i+=1;
+        }    
+    }
+
+    private static process Consumer{
+        while(true){
+            System.out.println("Consumir" + m.consumir());
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            JR.registerQuiescenceAction(done);     
+        } catch (edu.ucdavis.jr.QuiescenceRegistrationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Accion a ejecutar cuando terminan todos los procesos
+    private static op void done() {
+        System.out.println("todos consumidos y producidos");
+
+    }
+}

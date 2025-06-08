@@ -1,4 +1,4 @@
-//a)	Búffer simple, 1 productor y 1 consumidor.
+//b)	Búffer ilimitado, 1 productor y 1 consumidor.
 public class ProducerConsumer {
 
     private static Monitor m = new Monitor("Monitor ProductorConsumidor"); //The monitor
@@ -8,7 +8,7 @@ public class ProducerConsumer {
     private static process Producer{
         int i=0;
         while(true){
-            m.deposit(i);
+            m.depositar(i);
             i+=1;
         }    
     }

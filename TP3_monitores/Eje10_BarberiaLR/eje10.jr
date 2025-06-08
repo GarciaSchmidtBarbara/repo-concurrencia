@@ -1,0 +1,57 @@
+//10. Problema de la Barbería, implemente una solución utilizando un monitor de Lampson & Redell en JR con las siguientes restricciones:
+//a)	Puede haber N clientes esperando en la barbería, además de quien está sentado en el sillón de corte.
+//b)	Hay un único sillón para corte y un único Barbero que además cobra en la única caja disponible.
+
+public class eje10{
+
+    private static process Barbero{
+        while (true) {
+            m.dormir();
+            m.atenderCliente();
+            m.cobrar();
+        }   
+    }
+
+    private static process Cliente((int i=0; i<10; i++)){ 
+        if(m.hayLugar){
+            m.ingresaCliente();
+
+        } else System.out.println('no hay lugar en la barberia para esperar, cliente se va');
+            m.esperar();
+            P(mutex);
+            if(clientes_esperando<N){
+                clientes_esperando++;
+                if(clientes_esperando==1){
+                    V(puedoDormir);
+                }
+                V(mutex);
+                P(sillaEspera);
+
+                V(clienteEnSillon); //barrera
+                P(barberoListoParaCortar);
+
+                V(clientePaga);
+                P(barberoListoParaCobrar);
+
+                P(mutex);
+                clientes_esperando--;
+            }          
+            V(mutex);   
+    }
+
+    //Metodo principal
+    public static void main(String[] args) {
+        try {
+            JR.registerQuiescenceAction(done);     
+        } catch (edu.ucdavis.jr.QuiescenceRegistrationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Accion a ejecutar cuando terminan todos los procesos
+    private static op void done() {
+        System.out.println("FIN");
+    }
+}
+
+    
