@@ -31,10 +31,11 @@ _monitor MonitorBarberia {
         while(count == N){
             _wait(puedoProducir);
         }
-        _signal(puedoConsumir); //despierta al siguiente y sigue ejecutando.
+        
         buffer[rear] = data;
         rear=(rear+1)%N;
         count++;
+        _signal(puedoConsumir); //despierta al siguiente y sigue ejecutando.
         //PREGUNTA: por mas que el proceso despertado espere, es necesario colocar el signal aca? estando arriba se nota bien que es un LR
     }
 
