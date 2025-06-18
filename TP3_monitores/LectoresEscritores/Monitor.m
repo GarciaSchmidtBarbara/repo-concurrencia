@@ -43,7 +43,7 @@ _monitor Monitor {
 
     _proc void salir(){
         cantLector--;
-        if(cantLector = 0){
+        if(cantLector == 0){
             _signal(puedoEscribir);
         }
     }

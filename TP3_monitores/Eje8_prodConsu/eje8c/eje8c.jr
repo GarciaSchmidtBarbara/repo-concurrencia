@@ -1,0 +1,23 @@
+//c)	Búffer ilimitado, n productores y m consumidores. El monitor es el mismo, no cambia ya que sigue permitiendo que ingresen de a 1
+public class ProducerConsumer {
+
+    private int N=10;
+    private int M=10;
+    private static Monitor m = new Monitor("Monitor ProductorConsumidor"); //The monitor
+
+    public static void main(String... args){}
+
+    private static process Producer((int i=0; i<N; i++)){
+        int i=0;
+        while(true){
+            m.depositar(i);
+            i+=1;
+        }    
+    }
+
+    private static process Consumer((int i=0; i<N; i++)){
+        while(true){
+            System.out.println("Consumiur" + m.consumir());
+        }
+    }
+}

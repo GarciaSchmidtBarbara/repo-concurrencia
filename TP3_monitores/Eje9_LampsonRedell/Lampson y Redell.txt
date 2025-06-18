@@ -1,0 +1,8 @@
+Dentro del monitor
+Si un proceso hace SIGAL, continua ejecutando y el proceso despertado aguarda a que el proceso anterior libere el monitor. 
+No se asigna el control inmediatamente.
+
+Ej: proceso hace hace signal(cond)
+    proceso B es despertado y espera afuera hasta que A termine.
+    A termina de ejecutar y sale del monitor
+    B ingresa al monitor y comienza a ejecutar

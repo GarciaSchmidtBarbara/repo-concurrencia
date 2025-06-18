@@ -11,38 +11,38 @@ import java.io.Serializable;
       implements Serializable, Cloneable
     {
 	static final long serialVersionUID = 0;
-	public Cap_ext_ op_ocupado_voidTovoid;
-	public Cap_ext_ JRget_op_ocupado_voidTovoid() {
-		return op_ocupado_voidTovoid;
+	public Cap_ext_ op_colaCond_voidTovoid;
+	public Cap_ext_ JRget_op_colaCond_voidTovoid() {
+		return op_colaCond_voidTovoid;
 	}
-	public void JRset_op_ocupado_voidTovoid(Cap_ext_ op_ocupado_voidTovoid) {
-		this.op_ocupado_voidTovoid = op_ocupado_voidTovoid;
+	public void JRset_op_colaCond_voidTovoid(Cap_ext_ op_colaCond_voidTovoid) {
+		this.op_colaCond_voidTovoid = op_colaCond_voidTovoid;
 	}
 
-	public Cap_ext_ op_colaEspera_voidTovoid;
-	public Cap_ext_ JRget_op_colaEspera_voidTovoid() {
-		return op_colaEspera_voidTovoid;
+	public Cap_ext_ op_mutex_voidTovoid;
+	public Cap_ext_ JRget_op_mutex_voidTovoid() {
+		return op_mutex_voidTovoid;
 	}
-	public void JRset_op_colaEspera_voidTovoid(Cap_ext_ op_colaEspera_voidTovoid) {
-		this.op_colaEspera_voidTovoid = op_colaEspera_voidTovoid;
+	public void JRset_op_mutex_voidTovoid(Cap_ext_ op_mutex_voidTovoid) {
+		this.op_mutex_voidTovoid = op_mutex_voidTovoid;
 	}
 
 	public JRsemaforoMonitor(JRsemaforoMonitor copy)
 	{
-	this.op_ocupado_voidTovoid = copy.op_ocupado_voidTovoid;
-	this.op_colaEspera_voidTovoid = copy.op_colaEspera_voidTovoid;
+	this.op_colaCond_voidTovoid = copy.op_colaCond_voidTovoid;
+	this.op_mutex_voidTovoid = copy.op_mutex_voidTovoid;
 
 	}
 	public JRsemaforoMonitor(Object ... opSig)
 	{
-	this.op_ocupado_voidTovoid = new Cap_ext_((Op_ext_.JRProxyOp)opSig[0]);
-	this.op_colaEspera_voidTovoid = new Cap_ext_((Op_ext_.JRProxyOp)opSig[1]);
+	this.op_colaCond_voidTovoid = new Cap_ext_((Op_ext_.JRProxyOp)opSig[0]);
+	this.op_mutex_voidTovoid = new Cap_ext_((Op_ext_.JRProxyOp)opSig[1]);
 
 	}
 	public JRsemaforoMonitor(boolean dummy)	{
 	    super(dummy);
-	this.op_ocupado_voidTovoid = Cap_ext_.noop;
-	this.op_colaEspera_voidTovoid = Cap_ext_.noop;
+	this.op_colaCond_voidTovoid = Cap_ext_.noop;
+	this.op_mutex_voidTovoid = Cap_ext_.noop;
 
 	}
 	public Object clone()
