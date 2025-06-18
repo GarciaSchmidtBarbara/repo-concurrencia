@@ -1,4 +1,4 @@
-_monitor Monitor {
+_monitor Monitor {//HOARE. 1 productor y 1 consumidor
 
     _var int buffer; //buffer simple
     _var boolean lleno = false;  // true si el buffer tiene un dato válido

@@ -4,19 +4,18 @@ public class ProducerConsumer {
     private static Monitor m = new Monitor("Monitor ProductorConsumidor"); //The monitor
 
     private static process Producer{
-        int i=1;
-        while(m.seguirProduciendo()){
+        int i = 0;
+        while(true){
             m.deposit(i);
-            i+=1;
-        }    
-        System.out.println("todos producidos");
+            i++;
+        }
     }
 
     private static process Consumer{
-        while(m.seguirConsumiento()){
+        while(true){
             System.out.println("Consumir" + m.consumir());
         }
-        System.out.println("todos consumidos");
+
     }
 
     public static void main(String[] args) {
@@ -29,7 +28,7 @@ public class ProducerConsumer {
 
     // Accion a ejecutar cuando terminan todos los procesos
     private static op void done() {
-        System.out.println("todos consumidos y producidos");
+        System.out.println("");
 
     }
 }

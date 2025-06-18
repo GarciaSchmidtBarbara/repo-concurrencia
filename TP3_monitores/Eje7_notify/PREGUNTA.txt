@@ -1,0 +1,11 @@
+yo pienso lo siguiente.. 
+supongamos que ingresan 2 lectores, como el buffer esta vacio se duermen. 
+Luego ingresa un escritor, como no hay nadie más en el buffer y el buffer no esta lleno ingresa, 
+coloca un dato y como lectoresEsperando>0 despierta a todos los lectores. 
+Los lectores despertados (de a uno) vuelven a evaluar la condicion, y como no se cumple continuan.. 
+el primero en continuar hace cantLector++ (queda en 1) , consume el dato y luego cantLector-- (queda en cero),
+luego evalua el if, y como cantLector==0 entonces manda un signal a puedoEscribir. 
+La variable cantLector en realidad no cuenta cuantos lectores hay, si no que solo marca si hay alguien 
+leyendo en este precioso momento. 
+
+cuando un lector llega al signal(puedoEscribir), cantLect=0. ¿entra un escritor?

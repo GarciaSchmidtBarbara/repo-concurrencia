@@ -1,4 +1,4 @@
-_monitor Monitor {
+_monitor Monitor { //HOARA. Búffer acotado, 1 productor y 1 consumidor.
 
     _ private static final int N = 5; //Size of the buffer
 
@@ -16,13 +16,10 @@ _monitor Monitor {
         }
 
         buffer[rear] = data;
-        rear++;
+        rear= (rear + 1) % N; // Circular buffer
         count++;
 
         _signal(puedoConsumir);
-    }
-    _proc bool seguirProduciendo(){
-        if(rear <= N) return true;
     }
 
     _proc int consumir(){
@@ -31,14 +28,12 @@ _monitor Monitor {
         }
 
         int result = buffer[front];
-        front++;
+        front = (front + 1) % N; // Circular buffer
         count--;
 
         _signal(puedoProducir);
 
         _return result;
     }
-    _proc bool seguirConsumiendo(){
-        if(front<=N) return true;
-    }
+
 }
