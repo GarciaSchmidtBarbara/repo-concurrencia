@@ -4,17 +4,22 @@ _monitor MonitorHoare {  //prioridad lectores
     _var int[] buffer = new int[N];
     _var int front;
     _var int rear;
+    _var int count; //cantidad de elementos en el buffer
     _var int cantLector;
     _var int cantEscritor;
+    _var int escritoresEsperando;
+    _var int lectoresEsperando;
+
 
     _condvar puedoEscribir;
     _condvar puedoLeer;  
 
     _proc void escribir(int data){
-        while(cantLector > 0 || cantEscritor > 0){ //si hay alguien leyendo o escribiendo espero
+        escritoresEsperando++;
+        while(cantLector > 0 || cantEscritor > 0 || count == N){ //si hay alguien leyendo o escribiendo espero
             _wait(puedoEscribir);
         }
-
+        escritoresEsperando--;
         cantEscritor++;
         System.out.println(data + " escribe" );
         buffer[rear] = data;
@@ -22,23 +27,30 @@ _monitor MonitorHoare {  //prioridad lectores
         count++;
 
         cantEscritor--;
-
-        _signal(puedoLeer);//doy paso a los lectores si hay alguno esperando
+        if(lectoresEsperando > 0){ //si hay lectores esperando, les doy prioridad
+            _signal(puedoLeer);
+        } else {
+            _signal(puedoEscribir);//si no hay lectores esperando, doy paso a un escritor
+        }
 
     }
 
     _proc void leer(){
-        while(cantEscritor > 0){
+        lectoresEsperando++;
+        while(cantEscritor > 0 || count == 0){ //si hay alguien escribiendo o el buffer esta vacio espero
             _wait(puedoLeer);
         }
+        lectoresEsperando--;
         cantLector++;
         int result = buffer[front];
         System.out.println(" lee : "+ result);
         front = (front + 1) % N;
         count--;
         cantLector--;
-        if(cantLector == 0){
-            _signal(puedoEscribir); //cuando no haya mas lectores doy paso a los escritores
+        if (cantLector == 0) {
+            _signal(puedoEscribir);  // si fui el último lector, doy paso a un escritor
+        } else {
+            _signal(puedoLeer);  // hay más lectores activos, dejo pasar al siguiente
         }
     }
 

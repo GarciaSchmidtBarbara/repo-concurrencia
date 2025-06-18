@@ -28,7 +28,8 @@ _monitor MonitorHoare { //sin prioridades
 
         cantEscritor--;
         if(escritoresEsperando>0){
-            _signal(puedoEscribir);
+            _signal(puedoEscribir); //despiesto y libero monitor
+            
         }else{
             _signal(puedoLeer);
         } 
@@ -49,7 +50,7 @@ _monitor MonitorHoare { //sin prioridades
         cantLector--;
         if(cantLector == 0 && escritoresEsperando>0){
             _signal(puedoEscribir);
-        }else{
+        }else if (lectoresEsperando > 0){
             _signal(puedoLeer);
         }
     }
