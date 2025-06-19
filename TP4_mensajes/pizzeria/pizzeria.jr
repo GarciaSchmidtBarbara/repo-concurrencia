@@ -1,0 +1,57 @@
+import edu.ucdavis.jr.JR;     
+
+public class eje11{
+
+    static sem[]agregar_ingrediente = new sem[3]; //arreglo de 3 semaforos para los ayudantes
+    static sem puedo_seguir = 1;
+    static int cantPizzas = 0;
+
+    private process chef{
+        while(true){
+            int ingrediente_faltante= (int)Math.random(3):
+            int hay_pizza = 1;
+            V(semaforo[ingrediente_faltante]);
+            //se envia la pizza a terminar
+            P(puedo_seguir);
+            cantPizzas++;
+        }
+        
+
+    }
+    private process ayud1{
+        while(true){
+            P(agregar_ingrediente);
+            //poner salsa
+            V(puedo_seguir)
+        }
+    }
+    private process ayud2{
+        while(true){
+            P(agregar_ingrediente);
+            //poner queso
+            V(puedo_seguir)
+        }
+    }
+    private process ayud3{
+        while(true){
+            P(agregar_ingrediente);
+            //poner morrones
+            V(puedo_seguir)
+        }
+    }
+
+    //Metodo principal
+    public static void main(String[] args) {
+        try {
+            JR.registerQuiescenceAction(done);     
+        } catch (edu.ucdavis.jr.QuiescenceRegistrationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Accion a ejecutar cuando terminan todos los procesos
+    private static op void done() {
+        System.out.println("FIN");
+    }
+
+}

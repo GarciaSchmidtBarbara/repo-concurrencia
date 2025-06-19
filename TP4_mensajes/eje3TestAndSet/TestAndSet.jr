@@ -1,0 +1,35 @@
+public class TestAndSet {
+
+    private static boolean lock = false;
+
+    private static op void mutex(String); //El canal de tipo STRING
+
+
+    public static void main(String... args){
+        // Antes de iniciar tengo que llenar colocar un msg en el canal. Esto se hace para que el productor "tenga mensajes iniciales"
+        send mutex("");
+        TestAndSet pc = new TestAndSet();
+
+    }
+
+    private static boolean TestAndSet(){   
+        receive mutex(""); 
+        boolean anterior = lock;
+        lock = true;
+          
+        send mutex(""); 
+        return anterior;
+    }
+
+    private  process Process((int i=0; i< 10; i++)){
+        while(TestAndSet()){
+            System.out.println("proceso "+ i +" obtuvo el recurso");
+            lock = false;
+        }
+
+    }
+}
+/*
+    Se compila y ejecuta como un programa cualquiera con extension .jr
+    # jr ProducerConsumer
+*/

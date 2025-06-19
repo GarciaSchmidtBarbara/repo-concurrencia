@@ -1,0 +1,7 @@
+para hacer exclusion mutua usando mensajes:
+
+send canalMutex(mnsj)
+
+receive canalMutex (mnsj)
+SC
+send canalMutex(mnsj)

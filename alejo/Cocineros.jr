@@ -1,0 +1,17 @@
+import edu.ucdavis.jr.JR;
+
+public class Cocineros {
+private static char[] ingredientes = {' ',' ',' '};
+    static MonitorPizza monitor = new MonitorPizza();
+
+    public static process Chef {
+        
+        while (true) {
+            ingredientes[0]='S';
+            ingredientes[1]='M';
+            ingredientes[2]='Q';
+            monitor.ValidarIngredientes(ingredientes);
+        }
+    }
+
+}
