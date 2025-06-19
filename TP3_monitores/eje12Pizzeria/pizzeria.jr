@@ -15,20 +15,24 @@ public class pizzeria {
 
     private static process Ayudante1{
         while(true){
-            m.ayudanteListo();
+            System.out.println("Ayudante queso listo");
             m.colocarQueso();
             delay(1000);
         }
     }
+    
     private static process Ayudante2{
         while(true){
-            m.colocarSalsa();
+            System.out.println("Ayudante morron listo");
+            m.colocarMorron();
             delay(1000);
         }
     }
+
     private static process Ayudante3{
         while(true){
-            m.colocarMorron();
+            System.out.println("Ayudante salsa listo");
+            m.colocarSalsa();
             delay(1000);
         }
     }

@@ -1,0 +1,39 @@
+
+import edu.ucdavis.jr.JR;
+public class eje13 {
+    private static int N=10;; 
+
+    private static Despachador m = new Despachador("Monitor CPU"); //The monitor
+
+    private static process Proceso((int i=0; i<N; i++)) {
+        while(true){
+            int cpu = m.adquirirCPU(i);
+            System.out.println("CPU "+ cpu + " adquirida por el proceso " + i);
+            delay(1000);
+            System.out.println("CPU " + cpu + " liberada por el proceso " + i);
+            m.liberarCPU(cpu, i);
+        }
+    }
+
+    private static op void delay(int tiempo){  
+        try{
+                Thread.sleep(tiempo);
+        }catch(java.lang.Exception e){}
+
+    }
+
+    //Metodo principal
+    public static void main(String[] args) {
+        try {
+            JR.registerQuiescenceAction(done);     
+        } catch (edu.ucdavis.jr.QuiescenceRegistrationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Accion a ejecutar cuando terminan todos los procesos
+    private static op void done() {
+        System.out.println("fin");
+
+    }
+}

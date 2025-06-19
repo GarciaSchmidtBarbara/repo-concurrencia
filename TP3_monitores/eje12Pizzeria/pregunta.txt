@@ -1,0 +1,23 @@
+Chef entra, ve que ayudanteMorronlisto == false, se duerme en _wait(prepararPizza).
+
+Ayudante de salsa entra primero, pone ayudanteSalsalisto = true, hace _signal(prepararPizza) → despierta al chef.
+
+Chef se despierta, pero como el morrón aún no está listo, vuelve al while(!ayudanteMorronlisto) y se duerme otra vez.
+
+Salsa hace _wait(ponerSalsa) y se duerme esperando a ser llamado.
+
+Ayudante de morrón entra, pone ayudanteMorronlisto = true, hace _signal(prepararPizza) → despierta al chef.
+
+Chef se despierta, ve ayudanteMorronlisto == true, lo pone en false, imprime, hace _signal(ponerMorron).
+
+Pero NADIE está esperando en ponerMorron aún.
+
+Porque el ayudante de morrón todavía no hizo su _wait(ponerMorron).
+
+Esa señal se pierde.
+
+Luego el chef hace _wait(prepararPizza) → se duerme esperando que morrón ponga el ingrediente.
+
+Finalmente, morrón hace _wait(ponerMorron), pero ya no hay señal, así que también se duerme.
+
+❗ Resultado: deadlock.

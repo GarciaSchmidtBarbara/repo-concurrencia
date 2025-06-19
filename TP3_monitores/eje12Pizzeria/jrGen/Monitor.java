@@ -46,7 +46,11 @@ class Monitor extends java.lang.Object {
     private m_condvar ponerQueso = new m_condvar("ponerQueso");
     private m_condvar ponerSalsa = new m_condvar("ponerSalsa");
     private m_condvar ponerMorron = new m_condvar("ponerMorron");
-    private m_condvar ponerPizza = new m_condvar("ponerPizza");
+    private m_condvar prepararPizza = new m_condvar("prepararPizza");
+    private int totales = 0;
+    private boolean ayudanteQuesolisto = false;
+    private boolean ayudanteMorronlisto = false;
+    private boolean ayudanteSalsalisto = false;
     
     public void colocarQueso() {
         Op_ext.JRProxyOp op_m_return_from_wait_voidTovoid = null;
@@ -62,8 +66,10 @@ class Monitor extends java.lang.Object {
             if (recv_voidTovoid.retOp != null)
                 recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
         }
+        // Begin Expr2
+        ayudanteQuesolisto = true;
         {
-            if (((Boolean) (new Cap_ext_((ponerPizza).JRget_op_m_signal_voidToboolean(), "boolean")).call(jrvm.getTimestamp(), (java.lang.Object[]) null))) {
+            if (((Boolean) (new Cap_ext_((prepararPizza).JRget_op_m_signal_voidToboolean(), "boolean")).call(jrvm.getTimestamp(), (java.lang.Object[]) null))) {
                 {
                     jrvm.sendAndDie();
                     Recv_ext recv_voidTovoid = op_m_mutex_voidTovoid.recv();
@@ -88,6 +94,19 @@ class Monitor extends java.lang.Object {
             }
         }
         // Begin Expr2
+        System.out.println("poner queso");
+        {
+            if (((Boolean) (new Cap_ext_((prepararPizza).JRget_op_m_signal_voidToboolean(), "boolean")).call(jrvm.getTimestamp(), (java.lang.Object[]) null))) {
+                {
+                    jrvm.sendAndDie();
+                    Recv_ext recv_voidTovoid = op_m_mutex_voidTovoid.recv();
+                    jrvm.ariseAndReceive();
+                    if (recv_voidTovoid.retOp != null)
+                        recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
+                }
+            }
+        }
+        // Begin Expr2
         m_next();
     }
     
@@ -105,8 +124,10 @@ class Monitor extends java.lang.Object {
             if (recv_voidTovoid.retOp != null)
                 recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
         }
+        // Begin Expr2
+        ayudanteMorronlisto = true;
         {
-            if (((Boolean) (new Cap_ext_((ponerPizza).JRget_op_m_signal_voidToboolean(), "boolean")).call(jrvm.getTimestamp(), (java.lang.Object[]) null))) {
+            if (((Boolean) (new Cap_ext_((prepararPizza).JRget_op_m_signal_voidToboolean(), "boolean")).call(jrvm.getTimestamp(), (java.lang.Object[]) null))) {
                 {
                     jrvm.sendAndDie();
                     Recv_ext recv_voidTovoid = op_m_mutex_voidTovoid.recv();
@@ -131,6 +152,19 @@ class Monitor extends java.lang.Object {
             }
         }
         // Begin Expr2
+        System.out.println("poner morron");
+        {
+            if (((Boolean) (new Cap_ext_((prepararPizza).JRget_op_m_signal_voidToboolean(), "boolean")).call(jrvm.getTimestamp(), (java.lang.Object[]) null))) {
+                {
+                    jrvm.sendAndDie();
+                    Recv_ext recv_voidTovoid = op_m_mutex_voidTovoid.recv();
+                    jrvm.ariseAndReceive();
+                    if (recv_voidTovoid.retOp != null)
+                        recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
+                }
+            }
+        }
+        // Begin Expr2
         m_next();
     }
     
@@ -148,8 +182,10 @@ class Monitor extends java.lang.Object {
             if (recv_voidTovoid.retOp != null)
                 recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
         }
+        // Begin Expr2
+        ayudanteSalsalisto = true;
         {
-            if (((Boolean) (new Cap_ext_((ponerPizza).JRget_op_m_signal_voidToboolean(), "boolean")).call(jrvm.getTimestamp(), (java.lang.Object[]) null))) {
+            if (((Boolean) (new Cap_ext_((prepararPizza).JRget_op_m_signal_voidToboolean(), "boolean")).call(jrvm.getTimestamp(), (java.lang.Object[]) null))) {
                 {
                     jrvm.sendAndDie();
                     Recv_ext recv_voidTovoid = op_m_mutex_voidTovoid.recv();
@@ -174,6 +210,19 @@ class Monitor extends java.lang.Object {
             }
         }
         // Begin Expr2
+        System.out.println("poner salsa");
+        {
+            if (((Boolean) (new Cap_ext_((prepararPizza).JRget_op_m_signal_voidToboolean(), "boolean")).call(jrvm.getTimestamp(), (java.lang.Object[]) null))) {
+                {
+                    jrvm.sendAndDie();
+                    Recv_ext recv_voidTovoid = op_m_mutex_voidTovoid.recv();
+                    jrvm.ariseAndReceive();
+                    if (recv_voidTovoid.retOp != null)
+                        recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
+                }
+            }
+        }
+        // Begin Expr2
         m_next();
     }
     
@@ -191,49 +240,29 @@ class Monitor extends java.lang.Object {
             if (recv_voidTovoid.retOp != null)
                 recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
         }
-        {
-            m_condvar m_cv = (ponerPizza);
-            m_cv.JRget_op_m_wait_Cap_voidTovoidXintTovoid().send(jrvm.getTimestamp(), (edu.ucdavis.jr.RemoteHandler) null, new java.lang.Object [] {new Cap_ext_(op_m_return_from_wait_voidTovoid), 0});
-            m_cv.JRget_op_m_wait_ranks_intTovoid().send(jrvm.getTimestamp(), (edu.ucdavis.jr.RemoteHandler) null, new java.lang.Object [] {0});
-            // Begin Expr2
-            m_next();
-            {
-                jrvm.sendAndDie();
-                Recv_ext recv_voidTovoid = op_m_return_from_wait_voidTovoid.recv();
-                jrvm.ariseAndReceive();
-                if (recv_voidTovoid.retOp != null)
-                    recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
-            }
-        }
-        {
-            m_condvar m_cv = (ponerPizza);
-            m_cv.JRget_op_m_wait_Cap_voidTovoidXintTovoid().send(jrvm.getTimestamp(), (edu.ucdavis.jr.RemoteHandler) null, new java.lang.Object [] {new Cap_ext_(op_m_return_from_wait_voidTovoid), 0});
-            m_cv.JRget_op_m_wait_ranks_intTovoid().send(jrvm.getTimestamp(), (edu.ucdavis.jr.RemoteHandler) null, new java.lang.Object [] {0});
-            // Begin Expr2
-            m_next();
-            {
-                jrvm.sendAndDie();
-                Recv_ext recv_voidTovoid = op_m_return_from_wait_voidTovoid.recv();
-                jrvm.ariseAndReceive();
-                if (recv_voidTovoid.retOp != null)
-                    recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
-            }
-        }
-        {
-            m_condvar m_cv = (ponerPizza);
-            m_cv.JRget_op_m_wait_Cap_voidTovoidXintTovoid().send(jrvm.getTimestamp(), (edu.ucdavis.jr.RemoteHandler) null, new java.lang.Object [] {new Cap_ext_(op_m_return_from_wait_voidTovoid), 0});
-            m_cv.JRget_op_m_wait_ranks_intTovoid().send(jrvm.getTimestamp(), (edu.ucdavis.jr.RemoteHandler) null, new java.lang.Object [] {0});
-            // Begin Expr2
-            m_next();
-            {
-                jrvm.sendAndDie();
-                Recv_ext recv_voidTovoid = op_m_return_from_wait_voidTovoid.recv();
-                jrvm.ariseAndReceive();
-                if (recv_voidTovoid.retOp != null)
-                    recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
-            }
-        }
         if (i == 1) {
+            // Begin Expr2
+            System.out.println("esperar a queso");
+            JRLoop4: while (!ayudanteQuesolisto) {
+                {
+                    m_condvar m_cv = (prepararPizza);
+                    m_cv.JRget_op_m_wait_Cap_voidTovoidXintTovoid().send(jrvm.getTimestamp(), (edu.ucdavis.jr.RemoteHandler) null, new java.lang.Object [] {new Cap_ext_(op_m_return_from_wait_voidTovoid), 0});
+                    m_cv.JRget_op_m_wait_ranks_intTovoid().send(jrvm.getTimestamp(), (edu.ucdavis.jr.RemoteHandler) null, new java.lang.Object [] {0});
+                    // Begin Expr2
+                    m_next();
+                    {
+                        jrvm.sendAndDie();
+                        Recv_ext recv_voidTovoid = op_m_return_from_wait_voidTovoid.recv();
+                        jrvm.ariseAndReceive();
+                        if (recv_voidTovoid.retOp != null)
+                            recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
+                    }
+                }
+            }
+            // Begin Expr2
+            ayudanteQuesolisto = false;
+            // Begin Expr2
+            System.out.println("llamar a queso");
             {
                 if (((Boolean) (new Cap_ext_((ponerQueso).JRget_op_m_signal_voidToboolean(), "boolean")).call(jrvm.getTimestamp(), (java.lang.Object[]) null))) {
                     {
@@ -245,7 +274,91 @@ class Monitor extends java.lang.Object {
                     }
                 }
             }
+            {
+                m_condvar m_cv = (prepararPizza);
+                m_cv.JRget_op_m_wait_Cap_voidTovoidXintTovoid().send(jrvm.getTimestamp(), (edu.ucdavis.jr.RemoteHandler) null, new java.lang.Object [] {new Cap_ext_(op_m_return_from_wait_voidTovoid), 0});
+                m_cv.JRget_op_m_wait_ranks_intTovoid().send(jrvm.getTimestamp(), (edu.ucdavis.jr.RemoteHandler) null, new java.lang.Object [] {0});
+                // Begin Expr2
+                m_next();
+                {
+                    jrvm.sendAndDie();
+                    Recv_ext recv_voidTovoid = op_m_return_from_wait_voidTovoid.recv();
+                    jrvm.ariseAndReceive();
+                    if (recv_voidTovoid.retOp != null)
+                        recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
+                }
+            }
         } else if (i == 2) {
+            // Begin Expr2
+            System.out.println("esperar a morron");
+            JRLoop5: while (!ayudanteMorronlisto) {
+                {
+                    m_condvar m_cv = (prepararPizza);
+                    m_cv.JRget_op_m_wait_Cap_voidTovoidXintTovoid().send(jrvm.getTimestamp(), (edu.ucdavis.jr.RemoteHandler) null, new java.lang.Object [] {new Cap_ext_(op_m_return_from_wait_voidTovoid), 0});
+                    m_cv.JRget_op_m_wait_ranks_intTovoid().send(jrvm.getTimestamp(), (edu.ucdavis.jr.RemoteHandler) null, new java.lang.Object [] {0});
+                    // Begin Expr2
+                    m_next();
+                    {
+                        jrvm.sendAndDie();
+                        Recv_ext recv_voidTovoid = op_m_return_from_wait_voidTovoid.recv();
+                        jrvm.ariseAndReceive();
+                        if (recv_voidTovoid.retOp != null)
+                            recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
+                    }
+                }
+            }
+            // Begin Expr2
+            ayudanteMorronlisto = false;
+            // Begin Expr2
+            System.out.println("llamar a morron");
+            {
+                if (((Boolean) (new Cap_ext_((ponerMorron).JRget_op_m_signal_voidToboolean(), "boolean")).call(jrvm.getTimestamp(), (java.lang.Object[]) null))) {
+                    {
+                        jrvm.sendAndDie();
+                        Recv_ext recv_voidTovoid = op_m_mutex_voidTovoid.recv();
+                        jrvm.ariseAndReceive();
+                        if (recv_voidTovoid.retOp != null)
+                            recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
+                    }
+                }
+            }
+            {
+                m_condvar m_cv = (prepararPizza);
+                m_cv.JRget_op_m_wait_Cap_voidTovoidXintTovoid().send(jrvm.getTimestamp(), (edu.ucdavis.jr.RemoteHandler) null, new java.lang.Object [] {new Cap_ext_(op_m_return_from_wait_voidTovoid), 0});
+                m_cv.JRget_op_m_wait_ranks_intTovoid().send(jrvm.getTimestamp(), (edu.ucdavis.jr.RemoteHandler) null, new java.lang.Object [] {0});
+                // Begin Expr2
+                m_next();
+                {
+                    jrvm.sendAndDie();
+                    Recv_ext recv_voidTovoid = op_m_return_from_wait_voidTovoid.recv();
+                    jrvm.ariseAndReceive();
+                    if (recv_voidTovoid.retOp != null)
+                        recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
+                }
+            }
+        } else {
+            // Begin Expr2
+            System.out.println("esperar a salsa");
+            JRLoop6: while (!ayudanteSalsalisto) {
+                {
+                    m_condvar m_cv = (prepararPizza);
+                    m_cv.JRget_op_m_wait_Cap_voidTovoidXintTovoid().send(jrvm.getTimestamp(), (edu.ucdavis.jr.RemoteHandler) null, new java.lang.Object [] {new Cap_ext_(op_m_return_from_wait_voidTovoid), 0});
+                    m_cv.JRget_op_m_wait_ranks_intTovoid().send(jrvm.getTimestamp(), (edu.ucdavis.jr.RemoteHandler) null, new java.lang.Object [] {0});
+                    // Begin Expr2
+                    m_next();
+                    {
+                        jrvm.sendAndDie();
+                        Recv_ext recv_voidTovoid = op_m_return_from_wait_voidTovoid.recv();
+                        jrvm.ariseAndReceive();
+                        if (recv_voidTovoid.retOp != null)
+                            recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
+                    }
+                }
+            }
+            // Begin Expr2
+            ayudanteSalsalisto = false;
+            // Begin Expr2
+            System.out.println("llamar a salsa");
             {
                 if (((Boolean) (new Cap_ext_((ponerSalsa).JRget_op_m_signal_voidToboolean(), "boolean")).call(jrvm.getTimestamp(), (java.lang.Object[]) null))) {
                     {
@@ -257,17 +370,25 @@ class Monitor extends java.lang.Object {
                     }
                 }
             }
-        } else {
-            if (((Boolean) (new Cap_ext_((ponerMorron).JRget_op_m_signal_voidToboolean(), "boolean")).call(jrvm.getTimestamp(), (java.lang.Object[]) null))) {
+            {
+                m_condvar m_cv = (prepararPizza);
+                m_cv.JRget_op_m_wait_Cap_voidTovoidXintTovoid().send(jrvm.getTimestamp(), (edu.ucdavis.jr.RemoteHandler) null, new java.lang.Object [] {new Cap_ext_(op_m_return_from_wait_voidTovoid), 0});
+                m_cv.JRget_op_m_wait_ranks_intTovoid().send(jrvm.getTimestamp(), (edu.ucdavis.jr.RemoteHandler) null, new java.lang.Object [] {0});
+                // Begin Expr2
+                m_next();
                 {
                     jrvm.sendAndDie();
-                    Recv_ext recv_voidTovoid = op_m_mutex_voidTovoid.recv();
+                    Recv_ext recv_voidTovoid = op_m_return_from_wait_voidTovoid.recv();
                     jrvm.ariseAndReceive();
                     if (recv_voidTovoid.retOp != null)
                         recv_voidTovoid.retOp.send(jrvm.getTimestamp(), (java.lang.Object[]) null);
                 }
             }
         }
+        // Begin Expr2
+        totales++;
+        // Begin Expr2
+        System.out.println("Pizza terminada. Total pizzas: " + totales);
         // Begin Expr2
         m_next();
     }

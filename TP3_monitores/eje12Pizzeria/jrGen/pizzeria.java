@@ -167,7 +167,7 @@ return null;
     {
         try    {
             {
-                JRLoop4: while (true) {
+                JRLoop7: while (true) {
                     // Begin Expr2
                     n = (((int)(Math.random() * 3)) + 1);
                     // Begin Expr2
@@ -358,7 +358,9 @@ return null;
     {
         try    {
             {
-                JRLoop5: while (true) {
+                JRLoop8: while (true) {
+                    // Begin Expr2
+                    System.out.println("Ayudante queso listo");
                     // Begin Expr2
                     m.colocarQueso();
                     // Begin Expr2
@@ -547,9 +549,11 @@ return null;
     {
         try    {
             {
-                JRLoop6: while (true) {
+                JRLoop9: while (true) {
                     // Begin Expr2
-                    m.colocarSalsa();
+                    System.out.println("Ayudante morron listo");
+                    // Begin Expr2
+                    m.colocarMorron();
                     // Begin Expr2
                     (new Cap_ext_(JRget_op_delay_intTovoid(), "void")).call(jrvm.getTimestamp(), new java.lang.Object [] {1000});
                 }
@@ -736,9 +740,11 @@ return null;
     {
         try    {
             {
-                JRLoop7: while (true) {
+                JRLoop10: while (true) {
                     // Begin Expr2
-                    m.colocarMorron();
+                    System.out.println("Ayudante salsa listo");
+                    // Begin Expr2
+                    m.colocarSalsa();
                     // Begin Expr2
                     (new Cap_ext_(JRget_op_delay_intTovoid(), "void")).call(jrvm.getTimestamp(), new java.lang.Object [] {1000});
                 }
