@@ -1,0 +1,89 @@
+//b)	Los escritores tienen prioridad.
+
+import edu.ucdavis.jr.JR;
+public class LectoresEscritores {
+    private static final int N = 8; //escritores
+    private static final int M = 5;
+    private static String data="No hay datos aun";
+
+    private static op void mnjLector(String);
+    private static op void mnjEscritor(String); 
+    private static op void mutex(String);
+
+    private static int cantLectores=0;
+    private static int cantEscritores=0;
+    private static int lectoresEsperando=0;
+    private static int escritoresEsperando=0;
+
+
+    public static void main(String... args){
+        send mnjEscritor(" ");
+        send mutex(" ");
+
+        LectoresEscritores le = new LectoresEscritores();
+    }
+
+    private  process Escritor((int i=0; i < N; i++)) {
+        String aux;
+        while(true){ 
+            receive mutex(aux);
+            escritoresEsperando++;
+            while(cantEscritores>0 || cantLectores>0){
+                send mutex("");
+                receive mnjEscritor(aux); //espero mensaje de habilitacion
+                receive mutex(aux);        
+            }
+            cantEscritores++;
+            escritoresEsperando--;
+            send mutex("");
+
+            data = "msg del escritor " + i;
+            System.out.println("Escritor "+i+ " manda mensaje");
+
+            receive mutex(aux);
+            cantEscritores--;
+            if(escritoresEsperando>0){
+                send mnjEscritor("");
+            } else if(lectoresEsperando>0){
+                send mnjLector("");
+            }
+            send mutex("");
+            System.out.println("Escritor "+i+ " termina de escribir");
+            pausa(1000); 
+        }
+
+    }
+
+    private  process Lector((int i=0; i < M; i++)) {
+        String aux;
+        while(true){ 
+            receive mutex(aux);
+            lectoresEsperando++;
+            while(cantEscritores>0){
+                send mutex("");
+                receive mnjLector(aux); //espero mensaje de habilitacion
+                receive mutex(aux);    
+            }
+            cantLectores++;
+            lectoresEsperando--;
+            send mutex("");
+            System.out.println("Lector "+i+ " lee mensaje: "+data);
+
+            receive mutex(aux);
+            cantLectores--;
+            if(escritoresEsperando>0){
+                send mnjEscritor("");
+            } else if (lectoresEsperando > 0 && cantLectores == 0) {
+                send mnjLector("");
+            }
+            send mutex(""); 
+            pausa(1000); 
+        }
+    }
+
+    private static op void pausa(int tiempo){  
+        try{
+                Thread.sleep(tiempo);
+        }catch(java.lang.Exception e){}
+    }
+}
