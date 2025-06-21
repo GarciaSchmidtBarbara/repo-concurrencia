@@ -1,0 +1,43 @@
+// a)	Buffer simple, 1 productor y 1 consumidor en JR. USO EL BUZON COMO BUFFER
+import edu.ucdavis.jr.JR;
+public class ProducerConsumer {
+    private static final int N = 12; //Numero de productores y consumidores
+
+    private static op void mnjProduce(String); //un canal 
+
+    private static op void mnjConsume(String); 
+
+
+    public static void main(String... args){
+
+        // Antes de iniciar tengo que dejar un msg en el canal. Esto se hace para que el productor "tenga un mensaje inicial"
+        //si no lo hago debo crear un buffer de mensajes circular por ejemplo.
+            send mnjProduce("msg:");
+
+        ProducerConsumer pc = new ProducerConsumer();
+    }
+
+    private  process Producer{
+        int i=0;
+        while(true){
+            String data;  
+            receive mnjProduce(data); //para continuar recibo un mesnsaje del canal de productores (habilitacion)
+
+            data = "msg:" + i;
+            System.out.println("Produce: " + data);
+            i++;
+            send mnjConsume(data); //envio el mensaje al canal de consumidos
+        }
+
+    }
+
+    private  process Consumer{
+
+        while(true){
+            String data;
+            receive mnjConsume(data); //espero mensaje del canal de consumidores (habilitacion)
+            System.out.println("Consume: " + data);
+            send mnjProduce("listo"); //envio mensaje de habilitacion para que el productor siga produciendo.
+        }
+    }
+}

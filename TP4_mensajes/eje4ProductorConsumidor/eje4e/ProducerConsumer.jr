@@ -1,0 +1,76 @@
+//d)	Buffer acotado, n productores y m consumidores.
+
+import edu.ucdavis.jr.JR;
+public class ProducerConsumer {
+    private static final int N = 8; 
+    private static final int M = 5;
+    private static final int BUFFER_SIZE = 5;
+    private static String[] buffer = new String[BUFFER_SIZE]; //buffer de mensajes
+    private static int ini = 0;
+    private static int fin = 0;
+    private static int cant = 0; //cantidad de mensajes en el buffer
+
+    private static op void mnjProduce(String); //un canal 
+    private static op void mnjConsume(String); 
+    private static op void mutex(String); //canal de exclusion mutua
+
+
+    public static void main(String... args){
+        for(int i = 0; i < BUFFER_SIZE; i++) {
+            send mnjProduce(" ");
+        }
+        send mutex(" "); 
+
+        ProducerConsumer pc = new ProducerConsumer();
+    }
+
+    private  process Producer((int i=0; i < N; i++)) {
+        int e=1;
+        String aux;
+        while(true){ 
+            String data = "msg:" + e;
+            receive mutex(aux); //adquiero el mutex
+            if(cant == BUFFER_SIZE){ //si el buffer esta lleno, espero a que se consuma
+                send mutex(" "); //libero el mutex
+                receive mnjProduce(aux); //espero mensaje de habilitacion
+                receive mutex(aux); //solicito el mutex nuevamente
+            }
+            cant++;
+            buffer[fin] = data; //guardo el mensaje en el buffer
+            fin = (fin + 1) % BUFFER_SIZE; //actualizo el indice de fin
+            send mutex(" ");
+            
+            System.out.println("Productor "+i+ " produce: " + data);
+            e++;
+            send mnjConsume(" "); //envio el mensaje al canal de consumidos
+            pausa(1000); 
+        }
+
+    }
+
+    private  process Consumer((int i=0; i < M; i++)) {
+        String aux;
+        while(true){
+            receive mutex(aux);
+            if(cant == 0){ //si el buffer esta vacio, espero a que se produzca
+                send mutex(" ");
+                receive mnjConsume(aux); //espero mensaje de habilitacion
+                receive mutex(aux);
+            }
+            cant--;
+            String data = buffer[ini]; //obtengo el mensaje del buffer
+            ini = (ini + 1) % BUFFER_SIZE; //actualizo el indice de inicio
+            send mutex(" ");
+
+            System.out.println("Consumidor "+i+ " consume: " + data);
+            send mnjProduce(" "); //aviso que se puede producir
+            pausa(2000); 
+        }
+    }
+
+    private static op void pausa(int tiempo){  
+        try{
+                Thread.sleep(tiempo);
+        }catch(java.lang.Exception e){}
+    }
+}

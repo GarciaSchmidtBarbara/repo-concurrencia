@@ -1,0 +1,45 @@
+// b)	Buffer ilimitado, 1 productor y 1 consumidor
+
+import edu.ucdavis.jr.JR;
+public class ProducerConsumer {
+    private static final int N = 12; 
+
+    private static op void mnjProduce(String); //un canal 
+    private static op void mnjConsume(String); 
+
+
+    public static void main(String... args){
+            send mnjProduce("msg:");
+
+        ProducerConsumer pc = new ProducerConsumer();
+    }
+
+    private  process Producer{
+        int i=0;
+        while(true){ 
+            //como el buffer es ilimitado, no hay que esperar a que el consumidor consuma
+            String data = "msg:" + i;
+            System.out.println("Produce: " + data);
+            i++;
+            send mnjConsume(data); //envio el mensaje al canal de consumidos
+            pausa(1000); 
+        }
+
+    }
+
+    private  process Consumer{
+        while(true){
+            String data;
+            receive mnjConsume(data); //espero mensaje del canal de consumidores (habilitacion)
+            System.out.println("Consume: " + data);
+            //como el buffer es ilimitado no necesito avisar que ya consumi
+            pausa(2000); 
+        }
+    }
+
+    private static op void pausa(int tiempo){  
+        try{
+                Thread.sleep(tiempo);
+        }catch(java.lang.Exception e){}
+    }
+}
