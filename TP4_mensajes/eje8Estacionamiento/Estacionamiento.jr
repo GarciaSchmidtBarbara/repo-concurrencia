@@ -1,0 +1,88 @@
+import edu.ucdavis.jr.JR;
+
+public class Estacionamiento{
+    private static final int A =60;
+    private static final int N=10;
+    private static int totalPB = 0;
+    private static int total1P = 0;
+    private static int msj=0; //un mensaje sin nada, solo se usa para envair mensajes
+
+    private static op void mutex(int); //proteger cantidad
+    private static op void puerta(int);
+    private static op void plantaBaja(int); //buzon de planta baja
+    private static op void plantaAlta(int);
+    private static op void esperaIngreso(int); //fila de espera para ingresar
+
+    public static void main(String... args){
+        send mutex(msj);
+        send puerta(msj);
+        // Inicializamos los buzones de ambos pisos
+        for (int i = 0; i < N; i++) {
+            send plantaBaja(msj);
+            send plantaAlta(msj);
+        }
+
+        Estacionamiento est= new Estacionamiento();
+
+        // Evitamos que el main termine y libere todo
+        while (true) {
+            try { Thread.sleep(10000); } catch (Exception e) {}
+        }
+    }
+
+    private static process Auto((int i=A; i<A; i++)){
+        int planta;
+        receive mutex(msj);
+        while((totalPB + total1P)==(2*N)){ //si esta lleno espero
+            System.out.println("Auto "+i+" espera para ingresar. PB = "+totalPB+" , 1P = "+total1P);
+            send mutex(msj);
+            receive esperaIngreso(msj);
+            receive mutex(msj);
+        }
+        System.out.println("Auto "+i+" puede ingresar");
+        //cuando pueda ingresar veo a donde ir 
+        if(totalPB < N){
+            receive plantaBaja(msj); //espero para entrar a planta baja
+            totalPB++;
+            send mutex(msj);  
+            planta=0; 
+        }else{
+            receive plantaAlta(msj);
+            total1P++;
+            send mutex(msj);  
+            planta=1;    
+        }
+        System.out.println("Auto "+i+" se estaciona en planta "+planta);
+        receive puerta(msj); //espero acceso por la puerta
+        send puerta(msj); //libero puerta
+        int tiempo= (int)(Math.random()*9000);
+        pausa(tiempo);  
+        System.out.println("Auto "+i+" se va");
+
+        if(planta==0){
+            send plantaBaja(msj);
+            receive mutex(msj);
+            totalPB--;
+            send mutex(msj);
+        }else{
+            send plantaAlta(msj);
+            receive mutex(msj);
+            total1P--;
+            send mutex(msj);
+        }
+
+        receive puerta(msj); //espero para salir por la puerta
+        send puerta(msj); //libero puerta   
+
+        send esperaIngreso(msj);
+        receive mutex(msj);
+        System.out.println("TOTALES PB = "+totalPB+" , 1P = "+total1P);
+        send mutex(msj);
+    }
+
+    private static op void pausa(int tiempo){  
+        try{
+            Thread.sleep(tiempo);
+        }catch(java.lang.Exception e){}
+    }
+}

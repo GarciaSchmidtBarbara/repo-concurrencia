@@ -1,0 +1,87 @@
+//a)	Puede haber N clientes esperando en la barberia, ademas de quien esta sentado en el sillon de corte.
+
+import edu.ucdavis.jr.JR;
+
+public class Barberia{
+
+    private static final int N = 5;
+    private static final int M = 10; //clientes
+    private static int clientesEsperando = 0; 
+    private static op void mutex(String); //proteger cantidad
+    private static op void barbero(String); //avisar al barbero que hay cliente listo para cortar o si puede dormir
+    private static op void cliente(String); //avisar al cliente que puede sentarse en el sillon y que termino de cortarle el pelo
+    private static op void puedoEsperar(String); //avisar al cliente que puede esperar en la sala de espera
+
+    public static void main(String... args){
+        send mutex(" ");
+        Barberia b = new Barberia();
+    }
+
+    private static process Barbero{
+        String aux;
+        while (true) { 
+            receive mutex(aux);
+            if(clientesEsperando==0){
+                send mutex(""); //libero el mutex
+                System.out.println("Barbero durmiendo");
+                receive barbero(aux); //espero a que haya un cliente esperando
+            }else if (clientesEsperando==1){
+                send mutex("");
+                receive barbero(aux); //capturo el mensaje del primer cliente
+            }else{
+                send mutex("");
+                send puedoEsperar(""); //aviso al cliente que esta en la sala de espera que puede sentarse
+            }
+            System.out.println("Barbero despierto esperando al cliente en el sillon");
+            send cliente(""); //aviso al cliente que puede sentarse en el sillon");
+            receive barbero(aux); //espero a que el cliente se siente en el sillon
+            System.out.println("Barbero cortando el pelo");
+            pausa(2000); // simulo el tiempo que tarda en cortar el pelo
+            send cliente(""); //aviso al cliente que ya termine de cortarle el pelo
+            System.out.println("Barbero termino de cortar el pelo");
+            receive barbero(aux); //espero a que el cliente se vaya
+        }   
+    }
+
+    private static process Cliente((int i=0; i<M; i++)){ 
+        String aux;
+        receive mutex(aux);
+        if(clientesEsperando < N){
+            clientesEsperando++;
+            System.out.println("Cliente " + i + " espera en la barberia");
+            if(clientesEsperando==1){ //si es el primer cliente que llega, despierto al barbero
+                send mutex("");
+                System.out.println("Cliente " + i + " despierta al barbero");
+                send barbero(""); //despierto al barbero si estaba durmiendo
+            }
+            else{
+                send mutex("");
+                receive puedoEsperar(aux); //espero en sala de espera a que el barbero me avise que puedo sentarme
+            }
+            
+            receive cliente(aux); //espero a que el barbero me avise que puedo sentarme en el sillon
+
+            receive mutex(aux); 
+            clientesEsperando--; 
+            send mutex(""); 
+
+            System.out.println("Cliente " + i + " se sienta en el sillon");
+            send barbero(""); //aviso que me sente en el sillon
+            receive cliente(aux); //espero a que el barbero me avise que termino de cortarme el pelo
+            System.out.println("Cliente " + i + " se levanta del sillon y se va a su casa");
+            pausa(1000); //simulo el tiempo que tarda en irse
+            send barbero(""); //aviso que me fui
+        }else {
+            send mutex(""); //libero el mutex
+            System.out.println("Cliente " + i + " no puede esperar, se va a su casa");
+        }    
+    }
+
+    private static op void pausa(int tiempo){  
+        try{
+                Thread.sleep(tiempo);
+        }catch(java.lang.Exception e){}
+    }    
+}
+
+    

@@ -1,4 +1,4 @@
-//c)	Una solucion “justa”.
+//c)	Una solucion justa.
 
 import edu.ucdavis.jr.JR;
 public class LectoresEscritores {
@@ -6,18 +6,16 @@ public class LectoresEscritores {
     private static final int M = 5;
     private static String data="No hay datos aun";
 
-    private static op void mnjLector(String);
-    private static op void mnjEscritor(String); 
+    private static op void mnjLectorEscritor(String); //hay solo un buzon, el mismo para lectores y escritores
     private static op void mutex(String);
 
     private static int cantLectores=0;
     private static int cantEscritores=0;
     private static int lectoresEsperando=0;
-    private static int escritoresEsperando=0;
 
 
     public static void main(String... args){
-        send mnjEscritor(" ");
+        send mnjLectorEscritor(" ");
         send mutex(" ");
 
         LectoresEscritores le = new LectoresEscritores();
@@ -27,14 +25,12 @@ public class LectoresEscritores {
         String aux;
         while(true){ 
             receive mutex(aux);
-            escritoresEsperando++;
             while(cantEscritores>0 || cantLectores>0){
                 send mutex("");
-                receive mnjEscritor(aux); //espero mensaje de habilitacion
+                receive mnjLectorEscritor(aux); //espero mensaje de habilitacion
                 receive mutex(aux);        
             }
             cantEscritores++;
-            escritoresEsperando--;
             send mutex("");
 
             data = "msg del escritor " + i;
@@ -42,13 +38,9 @@ public class LectoresEscritores {
 
             receive mutex(aux);
             cantEscritores--;
-            if(escritoresEsperando>0){
-                send mnjEscritor("");
-            } else if(lectoresEsperando>0){
-                send mnjLector("");
-            }
             send mutex("");
             System.out.println("Escritor "+i+ " termina de escribir");
+            send mnjLectorEscritor(""); //habilito al sigueinte
             pausa(1000); 
         }
 
@@ -61,22 +53,23 @@ public class LectoresEscritores {
             lectoresEsperando++;
             while(cantEscritores>0){
                 send mutex("");
-                receive mnjLector(aux); //espero mensaje de habilitacion
+                receive mnjLectorEscritor(aux); //espero mensaje de habilitacion
                 receive mutex(aux);    
             }
-            cantLectores++;
             lectoresEsperando--;
+            if(lectoresEsperando>0){
+                send mnjLectorEscritor(""); //si hay lectores esperando habilito al siguiente
+            }
+            cantLectores++;
             send mutex("");
             System.out.println("Lector "+i+ " lee mensaje: "+data);
 
             receive mutex(aux);
             cantLectores--;
-            if(escritoresEsperando>0){
-                send mnjEscritor("");
-            } else if (lectoresEsperando > 0 && cantLectores == 0) {
-                send mnjLector("");
+            send mutex("");
+            if (cantLectores == 0) {
+                send mnjLectorEscritor(""); // ultimo lector libera a un escritor
             }
-            send mutex(""); 
             pausa(1000); 
         }
     }

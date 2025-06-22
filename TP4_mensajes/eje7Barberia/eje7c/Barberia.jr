@@ -1,0 +1,108 @@
+//c)	Hay una unica caja que es atendida por un unico cajero.
+
+import edu.ucdavis.jr.JR;
+
+public class Barberia{
+
+    private static final int N = 5;
+    private static final int M = 30; //clientes
+    private static final int SILLONES = 3; //cantidad de sillones
+    private static int msj=0; //lo uso como valor vacio para enviar mensajes pero no tiene importancia real el mensaje
+    private static int clientesEsperando = 0; 
+    private static op void mutex(String); //proteger cantidad
+    //cada proceso tenga su propio canal de comunicacion
+    private static cap void(int) cliente[] = new cap void(int)[M]; //capacidad de los sillones
+    private static cap void(int) barbero[] = new cap void(int)[SILLONES]; //capacidad de los barberos
+    
+    private static op void puedoEsperar(int); //buzon compartido de donde los barberos obtienen el siguiente cliente a atender
+    private static op void caja(int); //buzzon para el cajero
+
+    public static void main(String... args){
+        send mutex(" ");
+        // Inicializamos los buzones de los clientes
+        for (int i = 0; i < M; i++) {
+            cliente[i] = new op void(int);
+        }
+
+        // Inicializamos los buzones de los barberos
+        for (int i = 0; i < SILLONES; i++) {
+            barbero[i] = new op void(int);
+        }
+        
+        Barberia bar= new Barberia();
+
+        // Evitamos que el main termine y libere todo
+        while (true) {
+            try { Thread.sleep(10000); } catch (Exception e) {}
+        }
+
+    }
+
+    private static process Barbero((int b=0; b<SILLONES; b++)){
+        int cli;
+        while (true) { 
+            System.out.println("Barbero "+b+" durmiendo");
+            receive puedoEsperar(cli); //el barbero espera que haya un cliente
+            System.out.println("Barbero "+b+" despierto esperando al cliente "+cli+" en el sillon");
+            send cliente[cli](b); //aviso al cliente que puede sentarse en el sillon y le mando mi codigo para que sepa con quien comunicarse
+            receive barbero[b](msj); //espero a que el cliente se siente en el sillon
+            System.out.println("Barbero "+b+" cortando el pelo");
+            pausa(2000); // simulo el tiempo que tarda en cortar el pelo
+            send cliente[cli](msj); //aviso al cliente que ya termine de cortarle el pelo
+            System.out.println("Barbero "+b+" termino de cortar el pelo");
+            receive barbero[b](msj); //espero a que el cliente se levante de la silla
+        }   
+    }
+
+    private static process Cliente((int i=0; i<M; i++)){ 
+        String aux;
+        int barb; //variable para guardar el barbero asignado
+        receive mutex(aux);
+        if(clientesEsperando < N){
+            clientesEsperando++;
+            send mutex("");
+            System.out.println("Cliente " + i + " espera en la barberia");
+            send puedoEsperar(i); //el cliente avisa que esta esperando y manda su codigo
+            receive cliente[i](barb); //espera que le avisen que barbero le fue asignado
+            System.out.println("Cliente "+i+" Barbero asigando --> "+barb);
+
+            receive mutex(aux); 
+            clientesEsperando--; 
+            send mutex(""); 
+
+            System.out.println("Cliente " + i + " se sienta en un sillon del barbero " + barb);
+            send barbero[barb](msj); //aviso que me sente en el sillon
+            receive cliente[i](msj); //espero a que el barbero me avise que termino de cortarme el pelo
+            System.out.println("Cliente " + i + " se levanta del sillon y va a pagar");
+            send barbero[barb](msj); //aviso que me levante de la silla
+
+            send caja(i); //aviso que estoy listo para pagar
+            receive cliente[i](msj); //espero a que el cajero me cobre
+            receive cliente[i](msj); //espero que el cajero me de el ok para irme
+
+        }else {
+            send mutex(""); //libero el mutex
+            System.out.println("Cliente " + i + " no puede esperar, se va a su casa");
+        }    
+    }
+
+    private static process Cajero{
+        int cli;
+        while(true){
+            receive caja(cli); //espero que haya un cliente para cobrar
+            System.out.println("Cobrando al cliente "+cli);
+            send cliente[cli](msj); //aviso al cliente que puede pagar
+            pausa(1000);
+            System.out.println("Cliente "+cli+" pago, ya se puede ir");
+            send cliente[cli](msj);
+        }
+    }
+
+    private static op void pausa(int tiempo){  
+        try{
+            Thread.sleep(tiempo);
+        }catch(java.lang.Exception e){}
+    }    
+}
+
+    
