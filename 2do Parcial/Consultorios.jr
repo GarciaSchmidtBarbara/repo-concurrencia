@@ -1,0 +1,45 @@
+
+import edu.ucdavis.jr.JR;
+public class eje13 {
+    private static final int N=10;
+
+    private static Recepcionista m = new Recepcionista("Monitor clinica");
+
+    private static process Paciente((int i=0; i<N; i++)) {
+        int med = m.pedirTurno(i);
+        System.out.println("Paciente "+i+ "atendido por el Medico "+ med); 
+    }
+
+    private static process Medico((int i=0; i<M; i++)){
+        m.ingresaMedico(i);
+        while(true){
+            System.out.println("Medico "+i+" listo para atender");
+            int pac =m.atenderPaciente(i);
+            delay(2000);
+            System.out.println("Paciente "+pac+ "finalizo la consulta con el Medico "+ med);
+        }
+    }
+    
+
+    private static op void delay(int tiempo){  
+        try{
+                Thread.sleep(tiempo);
+        }catch(java.lang.Exception e){}
+
+    }
+
+    //Metodo principal
+    public static void main(String[] args) {
+        try {
+            JR.registerQuiescenceAction(done);     
+        } catch (edu.ucdavis.jr.QuiescenceRegistrationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Accion a ejecutar cuando terminan todos los procesos
+    private static op void done() {
+        System.out.println("fin");
+
+    }
+}
