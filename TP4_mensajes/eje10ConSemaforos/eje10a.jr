@@ -1,0 +1,51 @@
+//a)Usando semanforos Direccionamiento indirecto con mailboxes
+
+import edu.ucdavis.jr.*;
+
+public class Mensajeria {
+
+    static final int tam= 10; // Tamaño de la cola del mailbox
+    static int[] buffer = new int[tam];
+    static int in = 0; 
+    static int out = 0;
+    static int cant = 0;
+
+    static sem mutex = 1;       
+    static sem hayEspacio = tam;  
+    static sem hayMensaje = 0;     
+
+    private process Emisor(int mensaje) {
+        P(hayEspacio);          //espera que haya lugar
+        P(mutex);              
+        buffer[in] = mensaje;
+        in = (in + 1) % tam;
+        cant++;
+        V(mutex);               
+        V(hayMensaje);          //avisa que hay un mensaje disponible
+    }
+
+    private process Receptor {
+        int recibido;
+
+        P(hayMensaje);          //espera a que haya mensajes
+        P(mutex);               
+        recibido = buffer[out];
+        out = (out + 1) % tam;
+        System.out.println("Mensaje recibido: " + recibido);
+        cant--;
+        V(mutex);               
+        V(hayEspacio);          // avisa que leyo el mensaje, hay un lugar libre
+
+        System.out.println("Mensaje recibido: " + recibido);
+    }
+
+    public static void main(String[] args) {
+        Mensajeria sistema = new Mensajeria();
+    }
+}
+
+//c)	Indique la disciplina de cola que utiliza (no se requiere una en particular).
+// Se utiliza disciplina FIFO (los datos se leen del mas viejo "out" al mas nuevo)
+//d)	Funciona la solución obtenida en un sistema distribuido?.
+//Esta solución no es distribuida ya que JR está pensado para ejecución concurrente en un mismo entorno de ejecución.
+//Un sistema distribuido requeriria que los mailboxes esten en máquinas distintas.
